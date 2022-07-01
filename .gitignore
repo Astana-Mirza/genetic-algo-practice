@@ -1,0 +1,5 @@
+genetic_algorithm.pro.user
+Makefile
+.qmake.stash
+build/*
+obj/*
