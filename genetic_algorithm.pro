@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++11 lrelease embed_translations
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -19,6 +19,7 @@ DESTDIR     = $${PWD}/build
 OBJECTS_DIR = $${PWD}/obj
 MOC_DIR     = $${PWD}/obj
 UI_DIR      = $${PWD}/obj
+RCC_DIR     = $${PWD}/obj
 
 INCLUDEPATH += include
 
@@ -33,7 +34,7 @@ FORMS += \
     main_window.ui
 
 TRANSLATIONS += \
-    genetic_algorithm_ru_RU.ts
+    translations/genetic_algorithm_ru_RU.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
