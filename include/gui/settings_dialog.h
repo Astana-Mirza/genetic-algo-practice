@@ -43,15 +43,14 @@ private slots:
     void on_file_toggled(bool checked);
     void on_console_toggled(bool checked);
     void on_level_select_currentIndexChanged(int index);
-
     void on_select_button_clicked();
 
 private:
     bool check_validity() const;
     void display_settings();
 
-    Settings settings_;
-    Ui::SettingsDialog *ui_;
+    Settings settings_;         //! < текущие настройки.
+    Ui::SettingsDialog *ui_;    //! < указатель на раскладку.
 };
 
 #endif // SETTINGS_DIALOG_H

@@ -435,6 +435,9 @@
       </item>
       <item row="1" column="2">
        <widget class="QComboBox" name="level_select">
+        <property name="currentText">
+         <string>Info</string>
+        </property>
         <item>
          <property name="text">
           <string>No log</string>

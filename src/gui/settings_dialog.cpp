@@ -75,6 +75,7 @@ void SettingsDialog::display_settings()
         ui_->fitness_spin_box->setDisabled(true);
         break;
     }
+    ui_->level_select->setCurrentIndex(static_cast<int>(settings_.log_level));
     ui_->file->setChecked(settings_.log_to_file);
     ui_->select_button->setDisabled(!settings_.log_to_file);
     ui_->select_button->setText(settings_.log_file.isEmpty() ? tr("Select file") : settings_.log_file);
@@ -255,7 +256,7 @@ void SettingsDialog::on_console_toggled(bool checked)
 
 void SettingsDialog::on_level_select_currentIndexChanged(int index)
 {
-
+    settings_.log_level = static_cast<Log::LogLevel>(index);
 }
 
 
