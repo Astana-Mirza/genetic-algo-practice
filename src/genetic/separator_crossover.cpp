@@ -4,7 +4,7 @@
 #include <random>
 #include <map>
 
-std::vector<Gene> SeparatorCrossover::operator() (const Individual& parent1, const Individual& parent2)
+std::vector<Gene> SeparatorCrossover::exec(const Individual& parent1, const Individual& parent2)
 {
 	// Получаем гены родителей
 	const std::vector<Gene>& parent1_genes = parent1.get_genes();

@@ -6,10 +6,21 @@
 class Individual;
 class Gene;
 
+/**
+ * @brief Интерфейс оператора мутации
+ */
 class IMutator
 {
 public:
-	virtual std::vector<Gene> operator() (const Individual&) = 0;
+	/**
+	 * @brief Генерация генов нового потомка
+	 * @details Метод генерирует гены нового потомка путем случайной мутации генов родителя
+	 * 
+	 * @param parent Родительская особь
+	 * 
+	 * @return Гены потомка
+	 */
+	virtual std::vector<Gene> exec(const Individual& parent) = 0;
 };
 
 #endif

@@ -18,14 +18,16 @@ Packer::Packer(
 	tape_width_{tape_width},
 	population_size_{population_size},
 	probabilities_{
-			crossover1_probability,
-			crossover2_probability,
-			mutation_probability
+		crossover1_probability,
+		crossover2_probability,
+		mutation_probability
 	}
 {
+	// Создание операторов кроссовера и мутации
 	crossover1_operator_ = new SeparatorCrossover;
 	crossover2_operator_ = new OrderCrossover;
 	mutation_operator_ = new OrderMutator(rectangles, tape_width);
+	// Генерация начальной популяции
 	init_population();
 }
 
@@ -75,6 +77,7 @@ void Packer::init_population()
 }
 
 
+/* TODO: оператор выбора родителя */
 void Packer::generate_new_breed()
 {
 	// Используем кроссинговеры и мутацию, после используем отбор
@@ -86,16 +89,17 @@ void Packer::generate_new_breed()
 	for (int index = 0; index < population_size_; ++index)
 	{
 		const Individual& parent1 = population_.at(index);
+		// Случайный выбор второго родителя (панмиксия)
 		const Individual& parent2 = population_.at(
 			parents_distribution(random_generator)
 		);
-
+		// Определение оператора (кроссоверы или мутация)
 		float operation = probability_distribution(random_generator);
 		if (operation <= probabilities_[0])
 		{
 			// Кроссинговер 1
 			population_.emplace_back(
-				crossover1_operator_->operator()(parent1, parent2),
+				crossover1_operator_->exec(parent1, parent2),
 				rectangles_,
 				tape_width_
 			);
@@ -103,15 +107,15 @@ void Packer::generate_new_breed()
 		{
 			// Кроссинговер 2
 			population_.emplace_back(
-				crossover2_operator_->operator()(parent1, parent2),
+				crossover2_operator_->exec(parent1, parent2),
 				rectangles_,
 				tape_width_
 			);
-		} else
+		} else if (operation <= probabilities_[0] + probabilities_[1] + probabilities_[2])
 		{
 			// Мутация
 			population_.emplace_back(
-				mutation_operator_->operator()(parent1),
+				mutation_operator_->exec(parent1),
 				rectangles_,
 				tape_width_
 			);
