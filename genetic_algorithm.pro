@@ -24,14 +24,18 @@ RCC_DIR     = $${PWD}/obj
 INCLUDEPATH += include
 
 SOURCES += \
+    src/gui/settings_dialog.cpp \
     src/main.cpp \
     src/gui/main_window.cpp
 
 HEADERS += \
-    include/gui/main_window.h
+    include/gui/main_window.h \
+    include/gui/settings_dialog.h \
+    include/gui/settings.h
 
 FORMS += \
-    main_window.ui
+    forms/main_window.ui \
+    forms/settings_dialog.ui
 
 TRANSLATIONS += \
     translations/genetic_algorithm_ru_RU.ts
