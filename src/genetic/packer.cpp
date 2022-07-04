@@ -9,7 +9,8 @@
 Packer::Packer(
 	const std::vector<std::pair<int, int>>& rectangles,
 	int tape_width,
-	IParentSelector* parent_selector,
+	IParentSelector* parent_selection_operator,
+	ISelector* selection_operator,
 	int population_size,
 	float crossover1_probability,
 	float crossover2_probability,
@@ -23,7 +24,8 @@ Packer::Packer(
         crossover2_probability,
         mutation_probability
     },
-    parent_selector_{parent_selector}
+    parent_selection_operator_{parent_selection_operator},
+    selection_operator_{selection_operator}
 {
 	// Создание операторов кроссовера и мутации
 	crossover1_operator_ = new SeparatorCrossover;
@@ -40,7 +42,8 @@ Packer::~Packer()
 	delete crossover2_operator_;
 	delete mutation_operator_;
 
-	delete parent_selector_;
+	delete parent_selection_operator_;
+	delete selection_operator_;
 }
 
 
@@ -92,7 +95,7 @@ void Packer::generate_new_breed()
 	{
 		const Individual& parent1 = population_.at(index);
 		// Случайный выбор второго родителя (панмиксия)
-		const Individual& parent2 = parent_selector_->exec(population_, population_size_);
+		const Individual& parent2 = parent_selection_operator_->exec(population_, population_size_);
 		// Определение оператора (кроссоверы или мутация)
 		float operation = probability_distribution(random_generator);
 		if (operation <= probabilities_[0])
@@ -124,15 +127,8 @@ void Packer::generate_new_breed()
 		if (!population_.back().is_feasible())
 			population_.pop_back(); // Если особь непригодна, удаляем ее
 	}
-	// Сортируем особи по убыванию фитнесса
-	std::sort(
-		population_.begin(), population_.end(), 
-		[](const Individual& individual1, const Individual& individual2){
-			return individual1.get_fitness() > individual2.get_fitness();
-		}
-	);
-	// Оставляем population_size_ особей с наивысшим фитнессом
-	population_.resize(population_size_, Individual{{}, {}, 0});
+	// Отбираем подходящие особи
+	population_ = selection_operator_->exec(population_, population_size_);
 }
 
 
