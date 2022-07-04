@@ -1,4 +1,5 @@
 #include <logger/log.h>
+#include <QDateTime>
 
 Log& Log::get_log()
 {
@@ -38,7 +39,8 @@ void Log::write_to_all(const QString& message)
 {
     for (auto& [name, logger] : loggers_)
     {
-        logger->write_log(message + '\n');
+        logger->write_log("[" + QDateTime::currentDateTime().toString(Qt::RFC2822Date) +
+                          "]    " + message + '\n');
     }
 }
 
