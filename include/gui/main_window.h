@@ -4,6 +4,8 @@
 #include <QMainWindow>
 
 #include <gui/settings.h>
+#include <gui/enter_data.h>
+#include <gui/data.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,6 +34,7 @@ private slots:
 private:
     Settings algo_settings_;        //! < настройки приложения.
     Ui::MainWindow *ui_;            //! < указатель на раскладку.
+    Data data_;
 };
 
 #endif // #ifndef MAINWINDOW_H

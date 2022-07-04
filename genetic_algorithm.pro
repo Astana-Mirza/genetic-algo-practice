@@ -37,6 +37,7 @@ SOURCES += \
     $${SOURCE_DIR}/$${GUI_DIR}/settings_dialog.cpp \
     $${SOURCE_DIR}/main.cpp \
     $${SOURCE_DIR}/$${GUI_DIR}/main_window.cpp \
+    $${SOURCE_DIR}/$${GUI_DIR}/enter_data.cpp \
     $${SOURCE_DIR}/$${LOGGER_DIR}/log.cpp \
     $${SOURCE_DIR}/$${LOGGER_DIR}/console_logger.cpp \
     $${SOURCE_DIR}/$${LOGGER_DIR}/file_logger.cpp \
@@ -50,13 +51,15 @@ SOURCES += \
     $${SOURCE_DIR}/$${GENETIC_DIR}/panmixing_parent_selector.cpp \
     $${SOURCE_DIR}/$${GENETIC_DIR}/roulette_parent_selector.cpp \
     $${SOURCE_DIR}/$${GENETIC_DIR}/truncation_selector.cpp \
-    $${SOURCE_DIR}/$${GENETIC_DIR}/elite_selector.cpp
+    $${SOURCE_DIR}/$${GENETIC_DIR}/elite_selector.cpp \
+    src/gui/data.cpp
 
 HEADERS += \
     $${INCLUDE_DIR}/$${ABSTRACT_DIR}/ilogger.h \
     $${INCLUDE_DIR}/$${GUI_DIR}/main_window.h \
     $${INCLUDE_DIR}/$${GUI_DIR}/settings_dialog.h \
     $${INCLUDE_DIR}/$${GUI_DIR}/settings.h \
+    $${INCLUDE_DIR}/$${GUI_DIR}/enter_data.h \
     $${INCLUDE_DIR}/$${LOGGER_DIR}/log.h \
     $${INCLUDE_DIR}/$${LOGGER_DIR}/console_logger.h \
     $${INCLUDE_DIR}/$${LOGGER_DIR}/file_logger.h \
@@ -77,12 +80,14 @@ HEADERS += \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/roulette_parent_selector.h \
     $${INCLUDE_DIR}/$${ABSTRACT_DIR}/iselector.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/truncation_selector.h \
-    $${INCLUDE_DIR}/$${GENETIC_DIR}/elite_selector.h
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/elite_selector.h \
+    include/gui/data.h
 
 
 FORMS += \
     $${FORM_DIR}/main_window.ui \
-    $${FORM_DIR}/settings_dialog.ui
+    $${FORM_DIR}/settings_dialog.ui \
+    $${FORM_DIR}/enter_data.ui
 
 TRANSLATIONS += \
     $${TR_DIR}/genetic_algorithm_ru_RU.ts
