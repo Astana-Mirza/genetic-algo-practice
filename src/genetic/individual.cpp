@@ -8,8 +8,8 @@ Individual::Individual(
 	const std::vector<std::pair<int, int>> rectangles,
 	int tape_width
 ):
-	genes_{genes},
-	fitness_{0}
+    fitness_{0},
+    genes_{genes}
 {
 	is_feasible_ = check_is_feasible(rectangles, tape_width);
 	if (is_feasible())
@@ -56,7 +56,7 @@ bool Individual::check_is_feasible(
 ) const
 {
 	// Проверка особи на пригодность
-	for (int i = 0; i < rectangles.size(); ++i)
+    for (size_t i = 0; i < rectangles.size(); ++i)
 	{
 		// Получаем прямоугольник из гена
 		int rect_index = get_gene(i).get_index();
@@ -81,7 +81,7 @@ float Individual::calculate_fitness(
 	std::vector<std::vector<int>> tape;
 
 	// Проходим по всем генам и раскодируем решение
-	for (int gene_index = 0; gene_index < rectangles.size(); ++gene_index)
+    for (size_t gene_index = 0; gene_index < rectangles.size(); ++gene_index)
 	{
 		// Получаем нужный ген
 		const Gene& gene = get_gene(gene_index);

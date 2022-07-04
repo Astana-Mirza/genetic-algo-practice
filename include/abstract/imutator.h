@@ -21,6 +21,7 @@ public:
 	 * @return Гены потомка
 	 */
 	virtual std::vector<Gene> exec(const Individual& parent) = 0;
+    virtual ~IMutator() = default;
 };
 
 #endif

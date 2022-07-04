@@ -6,6 +6,7 @@
 #include "individual.h"
 #include "abstract/icrossover.h"
 #include "abstract/imutator.h"
+#include "abstract/iparent_selector.h"
 
 /**
  * @brief Класс, отвечающий за решение задачи раскроя
@@ -21,6 +22,7 @@ public:
 	 * 
 	 * @param rectangles Конфигурации прямоугольников, которые необходимо разместить на ленте
 	 * @param tape_width Ширина замощаемой ленты
+	 * @param parent_selector Оператор выбора родителя
 	 * @param population_size Размер популяции в генетическом алгоритме
 	 * @param crossover1_probability Вероятность использования первого оператора кроссовера
 	 * @param crossover2_probability Вероятность использования второго оператора кроссовера
@@ -29,6 +31,7 @@ public:
 	Packer(
 		const std::vector<std::pair<int, int>>& rectangles,
 		int tape_width,
+		IParentSelector* parent_selector,
 		int population_size = 20,
 		float crossover1_probability = 0.45,
 		float crossover2_probability = 0.45,
@@ -80,6 +83,10 @@ protected:
 	ICrossover* crossover1_operator_;
 	ICrossover* crossover2_operator_;
 	IMutator* mutation_operator_;
+	/**
+	 * Указатель на оператор выбора родителя
+	 */
+	IParentSelector* parent_selector_;
 };
 
 #endif

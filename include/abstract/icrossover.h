@@ -22,6 +22,7 @@ public:
 	 * @return Гены потомка
 	 */
 	virtual std::vector<Gene> exec(const Individual& parent1, const Individual& parent2) = 0;
+    virtual ~ICrossover() = default;
 };
 
 #endif

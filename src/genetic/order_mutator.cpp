@@ -20,13 +20,13 @@ std::vector<Gene> OrderMutator::exec(const Individual& parent)
 	// Гены потомка
 	std::vector<Gene> genes;
 
-	std::uniform_int_distribution<> positions_distribution(0, parent.get_genes().size() - 1);
-	std::uniform_int_distribution<> rotation_distribution(0, 1);
+    std::uniform_int_distribution<size_t> positions_distribution(0, parent.get_genes().size() - 1);
+    std::uniform_int_distribution<size_t> rotation_distribution(0, 1);
 	std::uniform_int_distribution<> coordinate_distribution(0, 3);
 
 	// Генерация двух различных индексов генов
-	int position1 = positions_distribution(random_generator_);
-	int position2 = positions_distribution(random_generator_);
+    size_t position1 = positions_distribution(random_generator_);
+    size_t position2 = positions_distribution(random_generator_);
 	while (position1 == position2)
 		position2 = positions_distribution(random_generator_);
 	// Будет ли измененен поворот в генах
@@ -54,7 +54,7 @@ std::vector<Gene> OrderMutator::exec(const Individual& parent)
 	}
 	
 	// Проход по всем генам родителя
-	for (int i = 0; i < parent.get_genes().size(); ++i)
+    for (size_t i = 0; i < parent.get_genes().size(); ++i)
 	{
 		// Меняем порядок генов с выбранными индексами, записываем изменения по этим генам
 		// Гены с другими индексами не изменяем и копируем от родителя

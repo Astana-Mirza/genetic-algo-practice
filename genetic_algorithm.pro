@@ -29,6 +29,7 @@ FORM_DIR     = forms
 ABSTRACT_DIR = abstract
 GUI_DIR      = gui
 LOGGER_DIR   = logger
+GENETIC_DIR  = genetic
 
 INCLUDEPATH += $${INCLUDE_DIR}
 
@@ -39,7 +40,17 @@ SOURCES += \
     $${SOURCE_DIR}/$${LOGGER_DIR}/log.cpp \
     $${SOURCE_DIR}/$${LOGGER_DIR}/console_logger.cpp \
     $${SOURCE_DIR}/$${LOGGER_DIR}/file_logger.cpp \
-    $${SOURCE_DIR}/$${LOGGER_DIR}/tab_logger.cpp
+    $${SOURCE_DIR}/$${LOGGER_DIR}/tab_logger.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/gene.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/individual.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/packer.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/order_crossover.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/separator_crossover.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/order_mutator.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/panmixing_parent_selector.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/roulette_parent_selector.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/truncation_selector.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/elite_selector.cpp
 
 HEADERS += \
     $${INCLUDE_DIR}/$${ABSTRACT_DIR}/ilogger.h \
@@ -49,7 +60,25 @@ HEADERS += \
     $${INCLUDE_DIR}/$${LOGGER_DIR}/log.h \
     $${INCLUDE_DIR}/$${LOGGER_DIR}/console_logger.h \
     $${INCLUDE_DIR}/$${LOGGER_DIR}/file_logger.h \
-    $${INCLUDE_DIR}/$${LOGGER_DIR}/tab_logger.h
+    $${INCLUDE_DIR}/$${LOGGER_DIR}/tab_logger.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/gene.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/individual.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/packer.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/order_crossover.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/separator_crossover.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/order_mutator.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/icrossover.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/imutator.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/iparent_selector.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/panmixing_parent_selector.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/roulette_parent_selector.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/iparent_selector.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/panmixing_parent_selector.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/roulette_parent_selector.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/iselector.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/truncation_selector.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/elite_selector.h
+
 
 FORMS += \
     $${FORM_DIR}/main_window.ui \

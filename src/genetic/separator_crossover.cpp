@@ -15,19 +15,19 @@ std::vector<Gene> SeparatorCrossover::exec(const Individual& parent1, const Indi
 
 	std::random_device rd;
 	std::default_random_engine random_generator(rd());
-	std::uniform_int_distribution<> positions_distribution(0, parent1_genes.size() - 1);
+    std::uniform_int_distribution<size_t> positions_distribution(0, parent1_genes.size() - 1);
 	// Случайным образом выбираем отрезок 0 <= position_left <= position_right <= parent1_genes.size()-1
-	int position_left = positions_distribution(random_generator);
-	int position_right = positions_distribution(random_generator);
+    size_t position_left = positions_distribution(random_generator);
+    size_t position_right = positions_distribution(random_generator);
 	// Если position_right < position_left, меняем их местами
 	if (position_right < position_left)
 		std::swap(position_left, position_right);
 	// Ассоциативный массив соответствий "ген i у родителя 2" - "ген i у родителя 1"
 	std::map<int, int> indeces_map;
-	for (int i = position_left; i <= position_right; ++i)
+    for (size_t i = position_left; i <= position_right; ++i)
 		indeces_map[parent2_genes.at(i).get_index()] = parent1_genes.at(i).get_index();
 	// Формируем гены потомка
-	for (int i = 0; i < parent1_genes.size(); ++i)
+    for (size_t i = 0; i < parent1_genes.size(); ++i)
 	{
 		// В гены с индексами из промежутка [position_left; position_right] 
 		// записываем индексы из генов родителя 2, координату и поворот не изменяем

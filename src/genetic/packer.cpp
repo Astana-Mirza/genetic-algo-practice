@@ -9,6 +9,7 @@
 Packer::Packer(
 	const std::vector<std::pair<int, int>>& rectangles,
 	int tape_width,
+	IParentSelector* parent_selector,
 	int population_size,
 	float crossover1_probability,
 	float crossover2_probability,
@@ -16,12 +17,13 @@ Packer::Packer(
 ):
 	rectangles_{rectangles},
 	tape_width_{tape_width},
-	population_size_{population_size},
-	probabilities_{
-		crossover1_probability,
-		crossover2_probability,
-		mutation_probability
-	}
+    population_size_{population_size},
+    probabilities_{
+        crossover1_probability,
+        crossover2_probability,
+        mutation_probability
+    },
+    parent_selector_{parent_selector}
 {
 	// Создание операторов кроссовера и мутации
 	crossover1_operator_ = new SeparatorCrossover;
@@ -37,6 +39,8 @@ Packer::~Packer()
 	delete crossover1_operator_;
 	delete crossover2_operator_;
 	delete mutation_operator_;
+
+	delete parent_selector_;
 }
 
 
@@ -52,7 +56,7 @@ void Packer::init_population()
 	{
 		// Инициализируем гены новой особи
 		std::vector<Gene> genes;
-		for (int k = 0; k < rectangles_.size(); ++k)
+        for (size_t k = 0; k < rectangles_.size(); ++k)
 		{
 			// Проходим по всем прямоугольникам из условия
 			// Случайным образом определяем, будем ли делать поворот на 90 градусов
@@ -77,22 +81,18 @@ void Packer::init_population()
 }
 
 
-/* TODO: оператор выбора родителя */
 void Packer::generate_new_breed()
 {
 	// Используем кроссинговеры и мутацию, после используем отбор
 	std::random_device rd;
 	std::default_random_engine random_generator(rd());
 	std::uniform_real_distribution<> probability_distribution(0, 1);
-	std::uniform_int_distribution<> parents_distribution(0, population_size_ - 1);
 
 	for (int index = 0; index < population_size_; ++index)
 	{
 		const Individual& parent1 = population_.at(index);
 		// Случайный выбор второго родителя (панмиксия)
-		const Individual& parent2 = population_.at(
-			parents_distribution(random_generator)
-		);
+		const Individual& parent2 = parent_selector_->exec(population_, population_size_);
 		// Определение оператора (кроссоверы или мутация)
 		float operation = probability_distribution(random_generator);
 		if (operation <= probabilities_[0])
