@@ -1,4 +1,37 @@
 #include "gui/data.h"
+#include <QFile>
+#include <QTextStream>
+
+void Data::read_from_file()
+{
+    if (file_name_.isEmpty())
+    {
+        return;
+    }
+    QFile file(file_name_);
+    if (!file.open(QFile::OpenModeFlag::ReadOnly))
+    {
+        throw std::runtime_error{QObject::tr("Cannot open file").toStdString()};
+    }
+    QTextStream stream(&file);
+    if (stream.atEnd())
+    {
+        throw std::runtime_error{QObject::tr("No tape width in file").toStdString()};
+    }
+    stream >> tape_width_;
+    rectangles_info_.clear();
+    while (!stream.atEnd())
+    {
+        size_t width, height;
+        stream >> width >> height;
+        if (stream.status() != QTextStream::Ok)
+        {
+            throw std::runtime_error{QObject::tr("Invalid file").toStdString()};
+        }
+        stream.skipWhiteSpace();
+        rectangles_info_.push_back({width, height});
+    }
+}
 
 QString Data::get_file_name() const
 {

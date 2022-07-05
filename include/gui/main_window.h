@@ -33,8 +33,8 @@ private slots:
 
 private:
     Settings algo_settings_;        //! < настройки приложения.
+    Data data_;                     //! < входные данные алгоритма.
     Ui::MainWindow *ui_;            //! < указатель на раскладку.
-    Data data_;
 };
 
 #endif // #ifndef MAINWINDOW_H

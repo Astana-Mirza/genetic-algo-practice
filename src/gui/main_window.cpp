@@ -37,5 +37,6 @@ void MainWindow::on_action_enter_data_triggered()
     if (dialog.exec() == QDialog::Accepted)
     {
         data_ = dialog.get_data();
+        data_.read_from_file();
     }
 }

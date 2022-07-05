@@ -6,9 +6,13 @@
 
 using pair_vector = std::vector<std::pair<int, int>>;
 
+//! @brief Класс входных данных для алгоритма.
 class Data
 {
 public:
+    //! @brief Считать данные из файла file_name_, если он задан.
+    void read_from_file();
+
     QString get_file_name() const;
     int get_tape_width() const;
     const pair_vector& get_rectangles_info() const;
