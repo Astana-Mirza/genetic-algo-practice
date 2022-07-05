@@ -67,11 +67,11 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab_log">
          <attribute name="title">
-          <string>Tab 1</string>
+          <string>Log</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0">
@@ -85,7 +85,7 @@
         </widget>
         <widget class="QWidget" name="tab_indiv">
          <attribute name="title">
-          <string>Tab 2</string>
+          <string>Individual</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
@@ -105,7 +105,7 @@
   </widget>
   <widget class="QToolBar" name="tool_bar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Options</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>

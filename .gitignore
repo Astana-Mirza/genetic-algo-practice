@@ -3,3 +3,4 @@ Makefile
 .qmake.stash
 build/*
 obj/*
+.qm/*
