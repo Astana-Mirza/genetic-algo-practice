@@ -4,7 +4,7 @@
 #include <vector>
 #include <QString>
 
-using pair_vector = std::vector<std::pair<int, int>>;
+using pair_vector = std::vector<std::pair<size_t, size_t>>;
 
 //! @brief Класс входных данных для алгоритма.
 class Data
@@ -18,12 +18,12 @@ public:
     const pair_vector& get_rectangles_info() const;
 
     void set_file_name(QString name);
-    void set_tape_width(int width);
+    void set_tape_width(size_t width);
     void set_rectangles_info(const pair_vector& info);
 
 private:
     QString file_name_;
-    int tape_width_ = 0;
+    size_t tape_width_ = 0;
     pair_vector rectangles_info_;
 };
 
