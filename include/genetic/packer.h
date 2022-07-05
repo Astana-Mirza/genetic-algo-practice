@@ -2,12 +2,16 @@
 #define PACKER_H
 
 #include <vector>
+#include <memory>
 
 #include "individual.h"
 #include "abstract/icrossover.h"
 #include "abstract/imutator.h"
 #include "abstract/iparent_selector.h"
 #include "abstract/iselector.h"
+#include "abstract/istop_condition.h"
+
+#include "genetic/result.h"
 
 /**
  * @brief Класс, отвечающий за решение задачи раскроя
@@ -32,65 +36,47 @@ public:
 	 */
 	Packer(
 		const std::vector<std::pair<int, int>>& rectangles,
-		int tape_width,
-		IParentSelector* parent_selection_operator,
-		ISelector* selection_operator,
-		int population_size = 20,
-		float crossover1_probability = 0.45,
-		float crossover2_probability = 0.45,
-		float mutation_probability = 0.1
-	);
-	~Packer();
+        size_t tape_width,
+        std::unique_ptr<IParentSelector>&& parent_selection_operator,
+        std::unique_ptr<ISelector>&& selection_operator,
+        std::unique_ptr<IStopCondition>&& stop_condition,
+        size_t population_size = 20,
+        double crossover1_probability = 0.45,
+        double crossover2_probability = 0.45,
+        double mutation_probability = 0.1
+    );
 
-	/**
-	 * @brief Метод для отладки текущей популяции
-	 * @details Выводится фитнес всех особей в текущей популяции
-	 */
-	void print_population() const;
+    //! @brief Выполнить один шаг алгоритма и вернуть результат.
+    Result step();
 
-	/**
-	 * @brief Метод генерации нового поколения
-	 */
-	void generate_new_breed();
+    //! @brief Получить текущую популяцию.
+    const std::vector<Individual>& get_population() const;
+
+    //! @brief Получить количество итераций алгоритма.
+    size_t get_iteration_count() const;
 protected:
-	/**
-	 * @brief Метод генерации начальной популяции
-	 */
-	void init_population();
+    //! @brief Метод генерации начальной популяции
+    Result init_population();
 
-	/**
-	 * Прямоугольники для замощения ленты
-	 */
-	std::vector<std::pair<int, int>> rectangles_;
-	/**
-	 * Ширина ленты
-	 */
-	int tape_width_;
-	/**
-	 * Размер популяции
-	 */
-	int population_size_;
-	/**
-	 * Текущая популяция
-	 */
-	std::vector<Individual> population_;
+    //! @brief Метод генерации нового поколения
+    Result generate_new_breed();
 
-	/**
-	 * Вероятности выбора операторов во время генерации нового поколения
-	 */
-	float probabilities_[3];
+    //! @brief Выбор особей в новую популяцию
+    Result selection();
 
-	/**
-	 * Указатели на операторы кроссовера и мутации
-	 */
-	ICrossover* crossover1_operator_;
-	ICrossover* crossover2_operator_;
-	IMutator* mutation_operator_;
-	/**
-	 * Указатель на оператор выбора родителя и отбора особей
-	 */
-	IParentSelector* parent_selection_operator_;
-	ISelector* selection_operator_;
+    std::vector<std::pair<int, int>> rectangles_;   //! < прямоугольники для замощения ленты
+    std::vector<Individual> population_;            //! < текущая популяция
+    size_t iteration_count_;                        //! < количество итераций алгоритма
+    size_t tape_width_;                             //! < ширина ленты
+    size_t population_size_;                        //! < размер популяции
+    double probabilities_[3];                       //! < вероятности выбора операторов
+    std::unique_ptr<IStopCondition> stop_condition_;                //! < оператор проверки критерия остановки
+    std::unique_ptr<ICrossover> crossover1_operator_;               //! < оператор кроссовера 1
+    std::unique_ptr<ICrossover> crossover2_operator_;               //! < оператор кроссовера 2
+    std::unique_ptr<IMutator> mutation_operator_;                   //! < оператор мутации
+    std::unique_ptr<IParentSelector> parent_selection_operator_;    //! < оператор выбора родителей
+    std::unique_ptr<ISelector> selection_operator_;                 //! < оператор отбора в популяцию
+    Result::State current_state_;                                   //! < текущее состояние алгоритма
 };
 
 #endif

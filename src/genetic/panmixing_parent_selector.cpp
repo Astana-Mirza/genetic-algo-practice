@@ -8,14 +8,11 @@ PanmixingParentSelector::PanmixingParentSelector():
 {}
 
 
-const Individual& PanmixingParentSelector::exec(
-	const std::vector<Individual>& population,
-	int population_size
+size_t PanmixingParentSelector::exec(
+    const std::vector<Individual>&,
+    size_t population_size
 )
 {
 	std::uniform_int_distribution<> parent_distribution(0, population_size - 1);
-
-	return population.at(
-		parent_distribution(random_generator_)
-	);
+    return parent_distribution(random_generator_);
 }

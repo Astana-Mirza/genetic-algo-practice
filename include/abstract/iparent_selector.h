@@ -19,9 +19,9 @@ public:
 	 * 
 	 * @return Родительская особь
 	 */
-	virtual const Individual& exec(
+    virtual size_t exec(
 		const std::vector<Individual>& population,
-		int population_size 
+        size_t population_size
 	) = 0;
 	virtual ~IParentSelector() = default;
 };

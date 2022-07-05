@@ -26,9 +26,9 @@ public:
 	 * 
 	 * @return Родительская особь
 	 */
-	const Individual& exec(
+    size_t exec(
 		const std::vector<Individual>& population,
-		int population_size
+        size_t population_size
 	);
 protected:
 	/**

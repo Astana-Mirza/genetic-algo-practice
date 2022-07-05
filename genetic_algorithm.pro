@@ -34,10 +34,11 @@ GENETIC_DIR  = genetic
 INCLUDEPATH += $${INCLUDE_DIR}
 
 SOURCES += \
-    $${SOURCE_DIR}/$${GUI_DIR}/settings_dialog.cpp \
     $${SOURCE_DIR}/main.cpp \
+    $${SOURCE_DIR}/$${GUI_DIR}/settings_dialog.cpp \
     $${SOURCE_DIR}/$${GUI_DIR}/main_window.cpp \
     $${SOURCE_DIR}/$${GUI_DIR}/enter_data.cpp \
+    $${SOURCE_DIR}/$${GUI_DIR}/data.cpp \
     $${SOURCE_DIR}/$${LOGGER_DIR}/log.cpp \
     $${SOURCE_DIR}/$${LOGGER_DIR}/console_logger.cpp \
     $${SOURCE_DIR}/$${LOGGER_DIR}/file_logger.cpp \
@@ -52,14 +53,23 @@ SOURCES += \
     $${SOURCE_DIR}/$${GENETIC_DIR}/roulette_parent_selector.cpp \
     $${SOURCE_DIR}/$${GENETIC_DIR}/truncation_selector.cpp \
     $${SOURCE_DIR}/$${GENETIC_DIR}/elite_selector.cpp \
-    src/gui/data.cpp
+    $${SOURCE_DIR}/$${GENETIC_DIR}/iter_stop_condition.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/fitness_stop_condition.cpp \
+    $${SOURCE_DIR}/$${GENETIC_DIR}/distance_stop_condition.cpp
 
 HEADERS += \
     $${INCLUDE_DIR}/$${ABSTRACT_DIR}/ilogger.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/istop_condition.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/icrossover.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/imutator.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/iparent_selector.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/iparent_selector.h \
+    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/iselector.h \
     $${INCLUDE_DIR}/$${GUI_DIR}/main_window.h \
     $${INCLUDE_DIR}/$${GUI_DIR}/settings_dialog.h \
     $${INCLUDE_DIR}/$${GUI_DIR}/settings.h \
     $${INCLUDE_DIR}/$${GUI_DIR}/enter_data.h \
+    $${INCLUDE_DIR}/$${GUI_DIR}/data.h \
     $${INCLUDE_DIR}/$${LOGGER_DIR}/log.h \
     $${INCLUDE_DIR}/$${LOGGER_DIR}/console_logger.h \
     $${INCLUDE_DIR}/$${LOGGER_DIR}/file_logger.h \
@@ -70,18 +80,16 @@ HEADERS += \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/order_crossover.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/separator_crossover.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/order_mutator.h \
-    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/icrossover.h \
-    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/imutator.h \
-    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/iparent_selector.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/panmixing_parent_selector.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/roulette_parent_selector.h \
-    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/iparent_selector.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/panmixing_parent_selector.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/roulette_parent_selector.h \
-    $${INCLUDE_DIR}/$${ABSTRACT_DIR}/iselector.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/truncation_selector.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/elite_selector.h \
-    include/gui/data.h
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/result.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/iter_stop_condition.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/fitness_stop_condition.h \
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/distance_stop_condition.h
 
 
 FORMS += \
