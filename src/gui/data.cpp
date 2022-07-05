@@ -1,6 +1,7 @@
 #include "gui/data.h"
 #include <QFile>
 #include <QTextStream>
+#include <QRandomGenerator>
 
 void Data::read_from_file()
 {
@@ -43,7 +44,18 @@ void Data::read_from_file()
     }
     tape_width_ = new_tape_width;
     rectangles_info_ = new_info;
+    update_palette();
 }
+
+
+void Data::update(const Data& other)
+{
+    file_name_ = other.get_file_name();
+    tape_width_ = other.get_tape_width();
+    rectangles_info_ = other.get_rectangles_info();
+    update_palette();
+}
+
 
 QString Data::get_file_name() const
 {
@@ -78,4 +90,21 @@ void Data::set_tape_width(size_t width)
 void Data::set_rectangles_info(const pair_vector& info)
 {
     rectangles_info_ = info;
+}
+
+
+void Data::update_palette()
+{
+    if (color_palette_.size() < rectangles_info_.size())
+    {
+        color_palette_.resize(rectangles_info_.size(), QColor{});
+    } else
+    {
+        for (size_t i = color_palette_.size(); i < rectangles_info_.size(); ++i)
+            color_palette_.emplace_back(
+                QRandomGenerator::global()->bounded(0, 255),
+                QRandomGenerator::global()->bounded(0, 255),
+                QRandomGenerator::global()->bounded(0, 255)
+            );
+    }
 }
