@@ -30,6 +30,7 @@ ABSTRACT_DIR = abstract
 GUI_DIR      = gui
 LOGGER_DIR   = logger
 GENETIC_DIR  = genetic
+COMMON_DIR   = common
 
 INCLUDEPATH += $${INCLUDE_DIR}
 
@@ -55,7 +56,9 @@ SOURCES += \
     $${SOURCE_DIR}/$${GENETIC_DIR}/elite_selector.cpp \
     $${SOURCE_DIR}/$${GENETIC_DIR}/iter_stop_condition.cpp \
     $${SOURCE_DIR}/$${GENETIC_DIR}/fitness_stop_condition.cpp \
-    $${SOURCE_DIR}/$${GENETIC_DIR}/distance_stop_condition.cpp
+    $${SOURCE_DIR}/$${GENETIC_DIR}/distance_stop_condition.cpp \
+    $${SOURCE_DIR}/$${COMMON_DIR}/rectangle_representation.cpp \
+    $${SOURCE_DIR}/$${COMMON_DIR}/individual_representation.cpp
 
 HEADERS += \
     $${INCLUDE_DIR}/$${ABSTRACT_DIR}/ilogger.h \
@@ -89,7 +92,9 @@ HEADERS += \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/result.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/iter_stop_condition.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/fitness_stop_condition.h \
-    $${INCLUDE_DIR}/$${GENETIC_DIR}/distance_stop_condition.h
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/distance_stop_condition.h \
+    $${INCLUDE_DIR}/$${COMMON_DIR}/rectangle_representation.h \
+    $${INCLUDE_DIR}/$${COMMON_DIR}/individual_representation.h
 
 
 FORMS += \

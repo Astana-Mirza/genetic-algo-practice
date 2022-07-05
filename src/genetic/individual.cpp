@@ -50,6 +50,12 @@ bool Individual::is_feasible() const
 }
 
 
+const IndividualRepresentation& Individual::representation() const
+{
+    return representation_;
+}
+
+
 bool Individual::check_is_feasible(
 	const std::vector<std::pair<int, int>> rectangles,
 	int tape_width
@@ -75,7 +81,7 @@ bool Individual::check_is_feasible(
 float Individual::calculate_fitness(
 	const std::vector<std::pair<int, int>> rectangles,
 	int tape_width
-) const
+)
 {
 	// Создаем ленту
 	std::vector<std::vector<int>> tape;
@@ -151,6 +157,8 @@ float Individual::calculate_fitness(
 			for (int x = place_x; x < place_x + rectangle_width; ++x)
 				tape.at(y).at(x) = gene.get_index() + 1;
 		}
+        // Добавляем прямоугольник в представление решения
+        representation_.add_rectangle(gene.get_index(), place_x, place_y, gene.get_rotation());
 	}
 	/*std::cout << "fitness: " << (1 / static_cast<float>(tape.size())) << std::endl;
 	for (int y = 0; y < tape.size(); ++y)

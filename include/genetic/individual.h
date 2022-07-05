@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "gene.h"
+#include "common/individual_representation.h"
 
 /**
  * @brief Класс особи
@@ -60,6 +61,12 @@ public:
 	 * @return Допустимо ли решение
 	 */
 	bool is_feasible() const;
+
+    /**
+     * @brief Получение представления решения
+     * @return Представление решения
+     */
+    const IndividualRepresentation& representation() const;
 protected:
 	/**
 	 * @brief Метод проверки допустимости решения
@@ -95,7 +102,7 @@ protected:
 	float calculate_fitness(
 		const std::vector<std::pair<int, int>> rectangles,
 		int tape_width
-	) const;
+    );
 
 	/**
 	 * Флаг, является ли решение допустимым
@@ -109,6 +116,10 @@ protected:
 	 * Гены особи
 	 */
 	std::vector<Gene> genes_;
+    /**
+      * Представление решения
+      */
+    IndividualRepresentation representation_;
 };
 
 #endif
