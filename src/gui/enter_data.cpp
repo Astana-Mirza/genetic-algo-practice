@@ -1,5 +1,6 @@
 #include "gui/enter_data.h"
 #include "ui_enter_data.h"
+#include <QFileInfo>
 #include <QFileDialog>
 #include <QString>
 #include <QLabel>
@@ -54,7 +55,8 @@ void EnterData::set_data(const Data& data)
             QString::number(data.get_rectangles_info().at(i).second)
         ));
     }
-    ui->open_file_button->setText(file_name_.isEmpty() ? "Select file" : file_name_);
+    ui->open_file_button->setText(file_name_.isEmpty() ?
+                                  "Select file" : QFileInfo(file_name_).fileName());
 }
 
 
@@ -73,7 +75,8 @@ void EnterData::on_cancel_button_clicked()
 void EnterData::on_open_file_button_clicked()
 {
     file_name_ = QFileDialog::getOpenFileName(this, "Select file");
-    ui->open_file_button->setText(file_name_.isEmpty() ? "Select file" : file_name_);
+    ui->open_file_button->setText(file_name_.isEmpty() ?
+                                  "Select file" : QFileInfo(file_name_).fileName());
 }
 
 

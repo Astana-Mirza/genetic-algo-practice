@@ -78,7 +78,8 @@ void SettingsDialog::display_settings()
     ui_->level_select->setCurrentIndex(static_cast<int>(settings_.log_level));
     ui_->file->setChecked(settings_.log_to_file);
     ui_->select_button->setDisabled(!settings_.log_to_file);
-    ui_->select_button->setText(settings_.log_file.isEmpty() ? tr("Select file") : settings_.log_file);
+    ui_->select_button->setText(settings_.log_file.isEmpty() ? tr("Select file") :
+                                QFileInfo(settings_.log_file).fileName());
     ui_->console->setChecked(settings_.log_to_console);
 }
 
@@ -263,4 +264,6 @@ void SettingsDialog::on_level_select_currentIndexChanged(int index)
 void SettingsDialog::on_select_button_clicked()
 {
     settings_.log_file = QFileDialog::getSaveFileName(nullptr, tr("Select file"));
+    ui_->select_button->setText(settings_.log_file.isEmpty() ? tr("Select file") :
+                                QFileInfo(settings_.log_file).fileName());
 }
