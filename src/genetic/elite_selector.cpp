@@ -5,7 +5,7 @@
 
 std::vector<Individual> EliteSelector::exec(
     const std::vector<Individual>& population, 
-    int population_size
+    size_t population_size
 )
 {
     std::vector<Individual> new_population(population);
@@ -15,7 +15,8 @@ std::vector<Individual> EliteSelector::exec(
             return individual1.get_fitness() > individual2.get_fitness();
         }
     );
-    new_population.resize(population_size, Individual{{}, {}, 0});
+    if (population.size() > population_size)
+        new_population.resize(population_size, Individual{{}, {}, 0});
 
     return new_population;
 }

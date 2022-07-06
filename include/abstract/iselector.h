@@ -22,7 +22,7 @@ public:
      */
     virtual std::vector<Individual> exec(
         const std::vector<Individual>& population,
-        int population_size
+        size_t population_size
     ) = 0;
     virtual ~ISelector() = default;
 };

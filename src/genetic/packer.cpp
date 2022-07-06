@@ -96,7 +96,14 @@ Result Packer::init_population()
         {
             // Проходим по всем прямоугольникам из условия
             // Случайным образом определяем, будем ли делать поворот на 90 градусов
-            bool rotation = rotation_distribution(random_generator) != 0;
+            bool rotation;
+            // Проверяем, есть ли возможность повернуть прямоугольник
+            if (rectangles_.at(k).first > tape_width_)
+                rotation = true;
+            else if (rectangles_.at(k).second > tape_width_)
+                rotation = false;
+            else
+                rotation = rotation_distribution(random_generator) != 0;
             // Определяем координату x нижнего левого угла прямоугольника на ленте
             int rectangle_width = rotation ? rectangles_.at(k).second : rectangles_.at(k).first;
             std::uniform_int_distribution<> coordinate_distribution(

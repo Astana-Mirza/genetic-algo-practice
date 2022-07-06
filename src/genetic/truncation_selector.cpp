@@ -11,7 +11,7 @@ TruncationSelector::TruncationSelector(float unsuitables_part):
 
 std::vector<Individual> TruncationSelector::exec(
     const std::vector<Individual>& population, 
-    int population_size
+    size_t population_size
 )
 {
     std::vector<Individual> new_population;
@@ -26,11 +26,13 @@ std::vector<Individual> TruncationSelector::exec(
     copy.resize(population.size() - population_size * unsuitables_part_, Individual{{}, {}, 0});
 
     std::uniform_int_distribution<> individual_distribution(0, population_size - 1);
-    for (int i = 0; i < population_size; ++i)
+    for (size_t i = 0; i < population_size; ++i)
     {
-        new_population.push_back(
-            copy.at(individual_distribution(random_generator_))
-        );
+        const Individual& offspring = copy.at(individual_distribution(random_generator_));
+        if (offspring.is_feasible())
+            new_population.push_back(offspring);
+        else
+            --i;
     }
 
     return new_population;

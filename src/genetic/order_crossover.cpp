@@ -1,8 +1,11 @@
 #include "genetic/order_crossover.h"
 #include "genetic/individual.h"
 
-#include <random>
 #include <map>
+
+OrderCrossover::OrderCrossover():
+    random_generator_{rd_()}
+{}
 
 std::vector<Gene> OrderCrossover::exec(const Individual& parent1, const Individual& parent2)
 {
@@ -13,12 +16,10 @@ std::vector<Gene> OrderCrossover::exec(const Individual& parent1, const Individu
     std::vector<Gene> genes;
     genes.reserve(parent1_genes.size());
 
-    std::random_device rd;
-    std::default_random_engine random_generator(rd());
     std::uniform_int_distribution<size_t> positions_distribution(0, parent1_genes.size() - 1);
     // Случайным образом выбираем отрезок 0 <= position_left <= position_right <= parent1_genes.size()-1
-    size_t position_left = positions_distribution(random_generator);
-    size_t position_right = positions_distribution(random_generator);
+    size_t position_left = positions_distribution(random_generator_);
+    size_t position_right = positions_distribution(random_generator_);
     // Если position_right < position_left, меняем их местами
     if (position_right < position_left)
         std::swap(position_left, position_right);

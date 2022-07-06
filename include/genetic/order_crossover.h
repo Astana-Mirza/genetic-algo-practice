@@ -2,6 +2,7 @@
 #define ORDER_CROSSOVER_H
 
 #include "abstract/icrossover.h"
+#include <random>
 
 /**
  * @brief Оператор кроссовера с изменением порядка генов
@@ -17,6 +18,7 @@
 class OrderCrossover: public ICrossover
 {
 public:
+    OrderCrossover();
     /**
      * @brief Генерация генов нового потомка
      * @details Метод генерирует гены нового потомка на основе генов его родителей
@@ -27,6 +29,12 @@ public:
      * @return Гены потомка
      */
     std::vector<Gene> exec(const Individual& parent1, const Individual& parent2);
+protected:
+    /**
+     * Генератор случайных чисел
+     */
+    std::random_device rd_;
+    std::default_random_engine random_generator_;
 };
 
 #endif

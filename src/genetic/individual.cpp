@@ -1,7 +1,6 @@
 #include "genetic/individual.h"
 
 #include <stdexcept>
-#include <iostream>
 
 Individual::Individual(
     const std::vector<Gene>& genes,
@@ -160,14 +159,6 @@ float Individual::calculate_fitness(
         // Добавляем прямоугольник в представление решения
         representation_.add_rectangle(gene.get_index(), place_x, place_y, gene.get_rotation());
     }
-    /*std::cout << "fitness: " << (1 / static_cast<float>(tape.size())) << std::endl;
-    for (int y = 0; y < tape.size(); ++y)
-    {
-        for (int x = 0; x < tape_width; ++x)
-            std::cout << tape.at(y).at(x) << " ";
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;*/
 
-    return 1 / static_cast<float>(tape.size());
+    return 1.0 / tape.size();
 }
