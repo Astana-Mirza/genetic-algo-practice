@@ -58,10 +58,10 @@ Result Packer::step()
             break;
         case Result::State::Selection:
             result = generate_new_breed();
-            iteration_count_++;
+            ++iteration_count_;
             break;
         default:
-            ;
+            break;
     }
     current_state_ = result.state;
     return result;
