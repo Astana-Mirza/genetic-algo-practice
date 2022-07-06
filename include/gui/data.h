@@ -23,6 +23,8 @@ public:
     void set_rectangles_info(const pair_vector& info);
 
     void update(const Data& other);
+
+    QColor get_color(size_t index) const;
 private:
     void update_palette();
 

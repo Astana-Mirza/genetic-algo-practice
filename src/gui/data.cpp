@@ -95,16 +95,22 @@ void Data::set_rectangles_info(const pair_vector& info)
 
 void Data::update_palette()
 {
-    if (color_palette_.size() < rectangles_info_.size())
+    if (color_palette_.size() > rectangles_info_.size())
     {
         color_palette_.resize(rectangles_info_.size(), QColor{});
     } else
     {
         for (size_t i = color_palette_.size(); i < rectangles_info_.size(); ++i)
             color_palette_.emplace_back(
-                QRandomGenerator::global()->bounded(0, 255),
-                QRandomGenerator::global()->bounded(0, 255),
-                QRandomGenerator::global()->bounded(0, 255)
+                QRandomGenerator::system()->bounded(0, 255),
+                QRandomGenerator::system()->bounded(0, 255),
+                QRandomGenerator::system()->bounded(0, 255)
             );
     }
+}
+
+
+QColor Data::get_color(size_t index) const
+{
+    return color_palette_.at(index);
 }
