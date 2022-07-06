@@ -5,8 +5,8 @@
 
 
 OrderMutator::OrderMutator(
-    const std::vector<std::pair<int, int>> rectangles,
-    int tape_width
+    const std::vector<std::pair<size_t, size_t>> rectangles,
+    size_t tape_width
 ):
     rectangles_{rectangles},
     tape_width_{tape_width},
@@ -89,19 +89,19 @@ std::vector<Gene> OrderMutator::exec(const Individual& parent)
 }
 
 
-int OrderMutator::generate_new_coordinate(
+size_t OrderMutator::generate_new_coordinate(
     const Individual& parent,
-    int gene_index,
+    size_t gene_index,
     bool change_rotation
 )
 {
     const Gene& gene = parent.get_gene(gene_index);
 
-    int rectangle_index = gene.get_index();
+    size_t rectangle_index = gene.get_index();
     bool condition = gene.get_rotation();
     if (change_rotation)
         condition = !gene.get_rotation();
-    int rectangle_width = condition ?
+    size_t rectangle_width = condition ?
         rectangles_.at(rectangle_index).second :
         rectangles_.at(rectangle_index).first;
     std::uniform_int_distribution<> item_distribution(

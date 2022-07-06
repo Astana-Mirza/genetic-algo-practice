@@ -4,8 +4,8 @@
 
 Individual::Individual(
     const std::vector<Gene>& genes,
-    const std::vector<std::pair<int, int>> rectangles,
-    int tape_width
+    const std::vector<std::pair<size_t, size_t>> rectangles,
+    size_t tape_width
 ):
     fitness_{0},
     genes_{genes}
@@ -16,18 +16,18 @@ Individual::Individual(
 }
 
 
-int Individual::genes_count() const
+size_t Individual::genes_count() const
 {
     return genes_.size();
 }
 
 
-const Gene& Individual::get_gene(int gene_index) const
+const Gene& Individual::get_gene(size_t gene_index) const
 {
-    if (gene_index < 0 || gene_index >= genes_count())
+    if (gene_index >= genes_count())
         throw std::out_of_range{"Gene index out of range"};
 
-    return genes_[gene_index];
+    return genes_.at(gene_index);
 }
 
 
@@ -56,8 +56,8 @@ const IndividualRepresentation& Individual::representation() const
 
 
 bool Individual::check_is_feasible(
-    const std::vector<std::pair<int, int>> rectangles,
-    int tape_width
+    const std::vector<std::pair<size_t, size_t>> rectangles,
+    size_t tape_width
 ) const
 {
     // Проверка особи на пригодность
@@ -66,7 +66,7 @@ bool Individual::check_is_feasible(
         // Получаем прямоугольник из гена
         int rect_index = get_gene(i).get_index();
         // Получаем ширину прямоугольника
-        int rect_width = get_gene(i).get_rotation() ?
+        size_t rect_width = get_gene(i).get_rotation() ?
             rectangles.at(rect_index).second :
             rectangles.at(rect_index).first;
         // Если сумма координата прямоугольника и ширины больше ширины ленты, размещение невозможно
@@ -78,12 +78,12 @@ bool Individual::check_is_feasible(
 
 
 float Individual::calculate_fitness(
-    const std::vector<std::pair<int, int>> rectangles,
-    int tape_width
+    const std::vector<std::pair<size_t, size_t>> rectangles,
+    size_t tape_width
 )
 {
     // Создаем ленту
-    std::vector<std::vector<int>> tape;
+    std::vector<std::vector<size_t>> tape;
 
     // Проходим по всем генам и раскодируем решение
     for (size_t gene_index = 0; gene_index < rectangles.size(); ++gene_index)
@@ -91,10 +91,10 @@ float Individual::calculate_fitness(
         // Получаем нужный ген
         const Gene& gene = get_gene(gene_index);
         // Получаем высоту и ширину прямоугольника, за который отвечает данный ген
-        int rectangle_width = gene.get_rotation() ? 
+        size_t rectangle_width = gene.get_rotation() ?
             rectangles.at(gene.get_index()).second :
             rectangles.at(gene.get_index()).first;
-        int rectangle_height = gene.get_rotation() ? 
+        size_t rectangle_height = gene.get_rotation() ?
             rectangles.at(gene.get_index()).first :
             rectangles.at(gene.get_index()).second;
         // Вычисляем минимальный y, где можно разместить прямоугольник на ленте
@@ -109,7 +109,7 @@ float Individual::calculate_fitness(
             while (place_y >= 0 && can_move)
             {
                 // Уменьшаем минимальный y, пока не дойдем до начала ленты или не наткнемся на препятствие
-                for (int x = place_x; x < place_x + rectangle_width; ++x)
+                for (size_t x = place_x; x < place_x + rectangle_width; ++x)
                 {
                     // Если данная строка уже содержит прямоугольник, минимальный y будет на 1 строку выше
                     if (tape.at(place_y).at(x) > 0)
@@ -126,15 +126,15 @@ float Individual::calculate_fitness(
             place_y = place_y > 0 ? place_y : 0;
         }
         // Расширяем ленту при необходимости
-        int extension = place_y + rectangle_height - tape.size();
-        for (int i = 0; i < extension; ++i)
+        size_t extension = place_y + rectangle_height - tape.size();
+        for (size_t i = 0; i < extension; ++i)
             tape.emplace_back(tape_width, 0);
 
         bool can_move = true;
         while (place_x >= 0 && can_move)
         {
             // Уменьшаем минимальный x, пока не дойдем до левого края или не наткнемся на препятствие
-            for (int y = place_y; y < place_y + rectangle_height; ++y)
+            for (size_t y = place_y; y < place_y + rectangle_height; ++y)
             {
                 if (tape.at(y).at(place_x) > 0)
                 {
@@ -151,9 +151,9 @@ float Individual::calculate_fitness(
         place_x = place_x > 0 ? place_x : 0;
         
         // Записываем прямоугольник на ленту
-        for (int y = place_y; y < place_y + rectangle_height; ++y)
+        for (size_t y = place_y; y < place_y + rectangle_height; ++y)
         {
-            for (int x = place_x; x < place_x + rectangle_width; ++x)
+            for (size_t x = place_x; x < place_x + rectangle_width; ++x)
                 tape.at(y).at(x) = gene.get_index() + 1;
         }
         // Добавляем прямоугольник в представление решения

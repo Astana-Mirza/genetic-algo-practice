@@ -24,7 +24,7 @@ std::vector<Gene> OrderCrossover::exec(const Individual& parent1, const Individu
     if (position_right < position_left)
         std::swap(position_left, position_right);
     // Ассоциативный массив соответствий "ген i у родителя 1" - "ген i у родителя 2"
-    std::map<int, int> indeces_map;
+    std::map<size_t, size_t> indeces_map;
     for (size_t i = position_left; i <= position_right; ++i)
         indeces_map[parent1_genes.at(i).get_index()] = parent2_genes.at(i).get_index();
     // Формируем гены потомка
@@ -43,7 +43,7 @@ std::vector<Gene> OrderCrossover::exec(const Individual& parent1, const Individu
         }
         // Гены не из промежутка будут копиями генов родителя 2
         // Берем индекс прямоугольника из гена родителя 2
-        int rectangle_index = parent2_genes.at(i).get_index();
+        size_t rectangle_index = parent2_genes.at(i).get_index();
         bool has_collision = true;
         // Если данный индекс уже встречается у потомка, то используем
         // ассоциативный массив indeces_map для нахождения индекса, которого еще нет у потомка

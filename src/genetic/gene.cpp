@@ -1,19 +1,19 @@
 #include "genetic/gene.h"
 
-Gene::Gene(int coordinate, int index, bool rotate):
+Gene::Gene(size_t coordinate, size_t index, bool rotate):
     coordinate_{coordinate},
     index_{index},
     rotate_{rotate}
 {}
 
 
-int Gene::get_coordinate() const
+size_t Gene::get_coordinate() const
 {
     return coordinate_;
 }
 
 
-int Gene::get_index() const
+size_t Gene::get_index() const
 {
     return index_;
 }

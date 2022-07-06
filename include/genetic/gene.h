@@ -1,6 +1,8 @@
 #ifndef GENE_H
 #define GENE_H
 
+#include <cstddef>
+
 /**
  * @brief Класс гена особи
  * @details Класс, отвечающий за какой-либо ген особи.
@@ -19,18 +21,18 @@ public:
      * @param index Индекс прямоугольника, за который отвечает данный ген
      * @param rotate Флаг поворота прямоугольника, за который отвечает данный ген
      */
-    Gene(int coordinate, int index, bool rotate = false);
+    Gene(size_t coordinate, size_t index, bool rotate = false);
 
     /**
      * @brief Метод для получения X кординаты расположения прямоугольника
      * @return X координата прямоугольника
      */
-    int get_coordinate() const;
+    size_t get_coordinate() const;
     /**
      * @brief Метод для получения индекса прямоугольника, за который отвечает данный ген
      * @return Индекс прямоугольника
      */
-    int get_index() const;
+    size_t get_index() const;
     /**
      * @brief Метод для получения поворота прямоугольника
      * @return Флаг поворота прямоугольника на 90 градусов
@@ -40,11 +42,11 @@ protected:
     /**
      * X координата прямоугольника
      */
-    int coordinate_;
+    size_t coordinate_;
     /**
      * Индекс прямоугольника
      */
-    int index_;
+    size_t index_;
     /**
      * Флаг поворота прямоугольника
      */

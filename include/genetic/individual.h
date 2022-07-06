@@ -27,15 +27,15 @@ public:
      */
     Individual(
         const std::vector<Gene>& genes,
-        const std::vector<std::pair<int, int>> rectangles,
-        int tape_width
+        const std::vector<std::pair<size_t, size_t>> rectangles,
+        size_t tape_width
     );
 
     /**
      * @brief Метод получения количества генов особи
      * @return Количество генов у особи
      */
-    int genes_count() const;
+    size_t genes_count() const;
     /**
      * @brief Метод получения конкретного гена особи
      * 
@@ -44,7 +44,7 @@ public:
      * 
      * @throws std::out_of_range Выбрасывается в случае, когда индекс выходит за границы массива генов
      */
-    const Gene& get_gene(int gene_index) const;
+    const Gene& get_gene(size_t gene_index) const;
     /**
      * @brief Метод получения всех генов особи
      * @return Массив генов особи
@@ -79,8 +79,8 @@ protected:
      * @return Является ли решение допустимым
      */
     bool check_is_feasible(
-        const std::vector<std::pair<int, int>> rectangles,
-        int tape_width
+        const std::vector<std::pair<size_t, size_t>> rectangles,
+        size_t tape_width
     ) const;
     /**
      * @brief Метод вычисления фитнеса особи
@@ -100,8 +100,8 @@ protected:
      * @return Значение фитнеса особи
      */
     float calculate_fitness(
-        const std::vector<std::pair<int, int>> rectangles,
-        int tape_width
+        const std::vector<std::pair<size_t, size_t>> rectangles,
+        size_t tape_width
     );
 
     /**

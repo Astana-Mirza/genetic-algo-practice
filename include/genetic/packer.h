@@ -35,7 +35,7 @@ public:
      * @param mutation_probability Вероятность использования оператора мутации
      */
     Packer(
-        const std::vector<std::pair<int, int>>& rectangles,
+        const std::vector<std::pair<size_t, size_t>>& rectangles,
         size_t tape_width,
         std::unique_ptr<IParentSelector>&& parent_selection_operator,
         std::unique_ptr<ISelector>&& selection_operator,
@@ -64,7 +64,7 @@ protected:
     //! @brief Выбор особей в новую популяцию
     Result selection();
 
-    std::vector<std::pair<int, int>> rectangles_;   //! < прямоугольники для замощения ленты
+    std::vector<std::pair<size_t, size_t>> rectangles_;   //! < прямоугольники для замощения ленты
     std::vector<Individual> population_;            //! < текущая популяция
     size_t iteration_count_;                        //! < количество итераций алгоритма
     size_t tape_width_;                             //! < ширина ленты

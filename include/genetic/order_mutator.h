@@ -29,8 +29,8 @@ public:
      * @param tape_width Ширина ленты
      */
     OrderMutator(
-        const std::vector<std::pair<int, int>> rectangles,
-        int tape_width
+        const std::vector<std::pair<size_t, size_t>> rectangles,
+        size_t tape_width
     );
     /**
      * @brief Метод вызова оператора мутации с изменением порядка генов
@@ -49,20 +49,20 @@ protected:
      * @param gene_index Индекс гена родительской особи
      * @param change_rotation Флаг изменения поворота прямоугольника
      */
-    int generate_new_coordinate(
+    size_t generate_new_coordinate(
         const Individual& parent,
-        int gene_index,
+        size_t gene_index,
         bool change_rotation
     );
 
     /**
      * Прямоугольники для замощения ленты
      */
-    std::vector<std::pair<int, int>> rectangles_;
+    std::vector<std::pair<size_t, size_t>> rectangles_;
     /**
      * Ширина ленты
      */
-    int tape_width_;
+    size_t tape_width_;
 
     /**
      * Генератор случайных чисел
