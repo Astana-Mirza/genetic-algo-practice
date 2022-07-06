@@ -21,6 +21,18 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <widget class="QTableWidget" name="table_widget">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerItem</enum>
+       </property>
        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
         <bool>false</bool>
        </attribute>

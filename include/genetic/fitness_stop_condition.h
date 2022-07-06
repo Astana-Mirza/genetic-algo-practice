@@ -3,7 +3,7 @@
 
 #include <abstract/istop_condition.h>
 
-class FitnessStopCondition : IStopCondition
+class FitnessStopCondition : public IStopCondition
 {
 public:
     //! @brief Конструктор, принимающий минимальный искомый фитнес.

@@ -3,7 +3,7 @@
 
 #include <abstract/istop_condition.h>
 
-class DistanceStopCondition : IStopCondition
+class DistanceStopCondition : public IStopCondition
 {
 public:
     //! @brief Конструктор, принимающий максимальную разницу фитнесов.

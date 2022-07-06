@@ -126,8 +126,8 @@ float Individual::calculate_fitness(
             place_y = place_y > 0 ? place_y : 0;
         }
         // Расширяем ленту при необходимости
-        size_t extension = place_y + rectangle_height - tape.size();
-        for (size_t i = 0; i < extension; ++i)
+        int extension = static_cast<int>(place_y + rectangle_height - tape.size());
+        for (int i = 0; i < extension; ++i)
             tape.emplace_back(tape_width, 0);
 
         bool can_move = true;

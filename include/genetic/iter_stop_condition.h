@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <abstract/istop_condition.h>
 
-class IterStopCondition : IStopCondition
+class IterStopCondition : public IStopCondition
 {
 public:
     //! @brief Конструктор, принимающий количество итераций.
