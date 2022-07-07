@@ -20,6 +20,16 @@ std::vector<Gene> OrderMutator::exec(const Individual& parent)
     // Гены потомка
     std::vector<Gene> genes;
 
+    if (parent.genes_count() == 1)
+    {
+        genes.emplace_back(
+            parent.get_gene(0).get_coordinate(),
+            parent.get_gene(0).get_index(),
+            !parent.get_gene(0).get_rotation() // изменяем поворот
+        );
+        return genes;
+    }
+
     std::uniform_int_distribution<size_t> positions_distribution(0, parent.get_genes().size() - 1);
     std::uniform_int_distribution<size_t> rotation_distribution(0, 1);
     std::uniform_int_distribution<> coordinate_distribution(0, 3);

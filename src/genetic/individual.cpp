@@ -1,18 +1,31 @@
 #include "genetic/individual.h"
 
 #include <stdexcept>
+#include <logger/log.h>
+
+#include <QObject>
 
 Individual::Individual(
     const std::vector<Gene>& genes,
     const std::vector<std::pair<size_t, size_t>> rectangles,
     size_t tape_width
 ):
+    is_feasible_{false},
     fitness_{0},
     genes_{genes}
 {
+    if (!genes.size() && !rectangles.size() && !tape_width)
+        return;
+
     is_feasible_ = check_is_feasible(rectangles, tape_width);
     if (is_feasible())
+    {
         fitness_ = calculate_fitness(rectangles, tape_width);
+        Log::get_log().info(QObject::tr("New individiual with fitness ") + QString::number(fitness_));
+    } else
+    {
+        Log::get_log().info(QObject::tr("New individiual (unsuitable)"));
+    }
 }
 
 

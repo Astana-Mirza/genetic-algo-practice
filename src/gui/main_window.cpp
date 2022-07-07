@@ -66,7 +66,7 @@ void MainWindow::on_action_enter_data_triggered()
 
 void MainWindow::on_action_step_triggered()
 {
-    if (!packer_)
+    if (!packer_ || !data_.get_rectangles_info().size())
     {
         return;
     }
@@ -81,18 +81,15 @@ void MainWindow::on_action_step_triggered()
     switch (result.state)
     {
         case Result::State::InitPopulation:
-            Log::get_log().info(tr("Generating initial population"));
             display_population();
             break;
         case Result::State::IndividualGeneration:
-            Log::get_log().info(tr("Starting individual generation (crossovers and mutations)"));
             parents_ = result.changed_individuals;
             iter_ = parents_.cbegin();
             display_population();
             advance_parent_display();
             break;
         case Result::State::Selection:
-            Log::get_log().info(tr("Selection of best individuals"));
             display_population();
             break;
         default:
@@ -103,7 +100,7 @@ void MainWindow::on_action_step_triggered()
 
 void MainWindow::on_action_run_triggered()
 {
-    if (!packer_)
+    if (!packer_ || !data_.get_rectangles_info().size())
     {
         return;
     }
@@ -287,13 +284,9 @@ void MainWindow::advance_parent_display()
     if (iter_->at(1) != static_cast<size_t>(-1))
     {
         ui_->table_widget->item(iter_->at(1), 0)->setBackgroundColor(QColor(Qt::green));
-        Log::get_log().info(tr("Crossover of individuals ") +
-                            QString::number(iter_->at(0) + 1) + tr(" and ") +
-                            QString::number(iter_->at(1) + 1));
     }
     else
     {
-        Log::get_log().info(tr("Mutation of individual ") + QString::number(iter_->at(0) + 1));
     }
     int child_index = iter_->at(2); // добавление новой строки в таблицу
     double fitness = packer_->get_population().at(child_index).get_fitness();

@@ -2,9 +2,11 @@
 #include "genetic/separator_crossover.h"
 #include "genetic/order_crossover.h"
 #include "genetic/order_mutator.h"
+#include "logger/log.h"
 
 #include <random>
 #include <algorithm>
+#include <QObject>
 
 Packer::Packer(
     const std::vector<std::pair<size_t, size_t>>& rectangles,
@@ -33,7 +35,10 @@ Packer::Packer(
     mutation_operator_{std::make_unique<OrderMutator>(rectangles, tape_width)},
     parent_selection_operator_{std::move(parent_selection_operator)},
     selection_operator_{std::move(selection_operator)},
-    current_state_{Result::State::Start} {}
+    current_state_{Result::State::Start}
+{
+    Log::get_log().debug(QObject::tr("Algorithm started"));
+}
 
 
 Result Packer::step()
@@ -42,6 +47,7 @@ Result Packer::step()
     if (current_state_ == Result::State::End ||
        (current_state_ == Result::State::Selection && stop_condition_->is_stop(*this)))
     {
+        Log::get_log().debug(QObject::tr("State: ") + QObject::tr("End"));
         current_state_ = Result::State::End;
         return result;
     }
@@ -64,6 +70,26 @@ Result Packer::step()
             break;
     }
     current_state_ = result.state;
+
+    switch (current_state_)
+    {
+        case Result::State::Start:
+            Log::get_log().debug(QObject::tr("State: ") + QObject::tr("Start"));
+            break;
+        case Result::State::InitPopulation:
+            Log::get_log().debug(QObject::tr("State: ") + QObject::tr("Init Population"));
+            break;
+        case Result::State::IndividualGeneration:
+            Log::get_log().debug(QObject::tr("State: ") + QObject::tr("Individual Generation"));
+            break;
+        case Result::State::Selection:
+            Log::get_log().debug(QObject::tr("State: ") + QObject::tr("Selection"));
+            break;
+        case Result::State::End:
+            Log::get_log().debug(QObject::tr("State: ") + QObject::tr("End"));
+            break;
+    }
+
     return result;
 }
 
@@ -82,6 +108,8 @@ size_t Packer::get_iteration_count() const
 
 Result Packer::init_population()
 {
+    Log::get_log().info(QObject::tr("Generating initial population"));
+
     std::random_device rd;
     std::default_random_engine random_generator(rd());
     std::uniform_int_distribution<> rotation_distribution(0, 1);
@@ -127,6 +155,8 @@ Result Packer::init_population()
 
 Result Packer::generate_new_breed()
 {
+    Log::get_log().info(QObject::tr("Starting individual generation (crossovers and mutations)"));
+
     Result result{Result::State::IndividualGeneration, {}};
     // Используем кроссинговеры и мутацию, после используем отбор
     std::random_device rd;
@@ -143,6 +173,10 @@ Result Packer::generate_new_breed()
         if (operation <= probabilities_[0])
         {
             // Кроссинговер 1
+            Log::get_log().info(
+                QObject::tr("Crossover of individuals ") + QString::number(index + 1) +
+                QObject::tr(" and ") + QString::number(second_index + 1)
+            );
             population_.emplace_back(
                 crossover1_operator_->exec(parent1, population_.at(second_index)),
                 rectangles_,
@@ -152,6 +186,10 @@ Result Packer::generate_new_breed()
         } else if (operation <= probabilities_[0] + probabilities_[1])
         {
             // Кроссинговер 2
+            Log::get_log().info(
+                QObject::tr("Crossover of individuals ") + QString::number(index + 1) +
+                QObject::tr(" and ") + QString::number(second_index + 1)
+            );
             population_.emplace_back(
                 crossover2_operator_->exec(parent1, population_.at(second_index)),
                 rectangles_,
@@ -161,6 +199,9 @@ Result Packer::generate_new_breed()
         } else if (operation <= probabilities_[0] + probabilities_[1] + probabilities_[2])
         {
             // Мутация
+            Log::get_log().info(
+                QObject::tr("Mutation of individual ") + QString::number(index + 1)
+            );
             population_.emplace_back(
                 mutation_operator_->exec(parent1),
                 rectangles_,
@@ -176,6 +217,7 @@ Result Packer::generate_new_breed()
 Result Packer::selection()
 {
     // Отбираем подходящие особи
+    Log::get_log().info(QObject::tr("Selection of best individuals"));
     population_ = selection_operator_->exec(population_, population_size_);
     return Result{Result::State::Selection, {}};
 }
