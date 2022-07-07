@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent):
     ui_->graphics_view->setScene(scene_);
     ui_->graphics_view->setMinimumHeight(350);
     ui_->graphics_view->setMinimumWidth(450);
+    ui_->graphics_view->setStyleSheet("padding: 20px 0;");
 }
 
 
