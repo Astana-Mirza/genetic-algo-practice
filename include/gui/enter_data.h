@@ -21,8 +21,8 @@ public:
     //! @param data объект входных данных для алгоритма.
     explicit EnterData(QWidget *parent = nullptr, const Data& data = {});
     ~EnterData();
-    Data get_data();
-    void set_data(const Data& data);
+    const Data& get_data();
+    void display_data();
 
 private slots:
     void on_ok_button_clicked();
@@ -32,8 +32,8 @@ private slots:
     void on_delete_rectangle_button_clicked();
 
 private:
+    Data data_;
     Ui::EnterData *ui;
-    QString file_name_;
 };
 
 #endif // ENTER_DATA_H

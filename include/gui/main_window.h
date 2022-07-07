@@ -36,6 +36,9 @@ private slots:
     //! @brief Слот кнопки "Шаг".
     void on_action_step_triggered();
 
+    //! @brief Слот кнопки "Запуск".
+    void on_action_run_triggered();
+
     //! @brief Слот кнопки "Стоп".
     void on_action_stop_triggered();
 
@@ -43,8 +46,16 @@ private slots:
     void on_table_widget_itemSelectionChanged();
 
 private:
+    //! @brief Применение настроек алгоритма и занесение входных данных в алгоритм.
     void apply_settings();
+
+    //! @brief Применение настроек логирования.
+    void apply_log_settings();
+
+    //! @brief Отобразить выбранную популяцию на экране.
     void display_population();
+
+    //! @brief Отобразить следующую пару родителей и ребёнка (кроссинговер или мутация).
     void advance_parent_display();
 
     Settings algo_settings_;                        //! < настройки приложения.

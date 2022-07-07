@@ -127,7 +127,7 @@
    </attribute>
    <addaction name="action_enter_data"/>
    <addaction name="action_step"/>
-   <addaction name="action_continue"/>
+   <addaction name="action_run"/>
    <addaction name="action_stop"/>
    <addaction name="separator"/>
    <addaction name="action_settings"/>
@@ -142,9 +142,12 @@
     <string>Step</string>
    </property>
   </action>
-  <action name="action_continue">
+  <action name="action_run">
    <property name="text">
-    <string>Continue</string>
+    <string>Run</string>
+   </property>
+   <property name="toolTip">
+    <string>Run</string>
    </property>
   </action>
   <action name="action_stop">

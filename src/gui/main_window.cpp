@@ -2,6 +2,7 @@
 #include <ui_main_window.h>
 
 #include <QTableWidgetItem>
+#include <QMessageBox>
 
 #include <gui/settings_dialog.h>
 #include <logger/log.h>
@@ -22,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent), iter_(parents_.cend()), packer_(nullptr), ui_(new Ui::MainWindow)
 {
     ui_->setupUi(this);
+    Log::get_log().add_logger("tab", std::make_unique<TabLogger>(ui_->text_edit_log));
+    Log::get_log().debug(tr("Starting program"));
 }
 
 
@@ -33,22 +36,24 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_action_settings_triggered()
 {
+    Log::get_log().debug(tr("Opening settings dialog"));
     SettingsDialog dialog(nullptr, algo_settings_);
     if (dialog.exec() == QDialog::Accepted)
     {
         algo_settings_ = dialog.get_settings();
         apply_settings();
+        apply_log_settings();
     }
 }
 
 
 void MainWindow::on_action_enter_data_triggered()
 {
+    Log::get_log().debug(tr("Opening data input dialog"));
     EnterData dialog(nullptr, data_);
     if (dialog.exec() == QDialog::Accepted)
     {
         data_.update(dialog.get_data());
-        data_.read_from_file();          // @TODO убрать отсюда, занести в enter_data
         apply_settings();
     }
 }
@@ -62,24 +67,27 @@ void MainWindow::on_action_step_triggered()
     }
     ui_->action_enter_data->setDisabled(true);
     ui_->action_settings->setDisabled(true);
-    /*if (iter_ != parents_.cend())
+    if (iter_ != parents_.cend())
     {
         advance_parent_display();
         return;
-    }*/
+    }
     Result result = packer_->step();
     switch (result.state)
     {
         case Result::State::InitPopulation:
+            Log::get_log().info(tr("Generating initial population"));
             display_population();
             break;
         case Result::State::IndividualGeneration:
+            Log::get_log().info(tr("Starting individual generation (crossovers and mutations)"));
             parents_ = result.changed_individuals;
             iter_ = parents_.cbegin();
             display_population();
             advance_parent_display();
             break;
         case Result::State::Selection:
+            Log::get_log().info(tr("Selection of best individuals"));
             display_population();
             break;
         default:
@@ -88,11 +96,29 @@ void MainWindow::on_action_step_triggered()
 }
 
 
+void MainWindow::on_action_run_triggered()
+{
+    if (!packer_)
+    {
+        return;
+    }
+    ui_->action_enter_data->setDisabled(true);
+    ui_->action_settings->setDisabled(true);
+    for (Result res = packer_->step(); res.state != Result::State::End; res = packer_->step())
+        ;
+    display_population();
+}
+
+
 void MainWindow::on_action_stop_triggered()
 {
+    Log::get_log().debug(tr("Algorithm stopped"));
     ui_->table_widget->setRowCount(0);
     ui_->action_enter_data->setDisabled(false);
     ui_->action_settings->setDisabled(false);
+    ui_->text_edit_log->clear();
+    parents_.clear();
+    iter_ = parents_.cbegin();
     apply_settings();
 }
 
@@ -165,6 +191,40 @@ void MainWindow::apply_settings()
 }
 
 
+void MainWindow::apply_log_settings()
+{
+    Log::get_log().set_log_level(algo_settings_.log_level);
+    if (algo_settings_.log_to_file)
+    {
+        try
+        {
+            Log::get_log().add_logger("file",
+                                      std::make_unique<FileLogger>(algo_settings_.log_file));
+        }
+        catch (const std::runtime_error& e)
+        {
+            algo_settings_.log_file = "";
+            algo_settings_.log_to_file = false;
+            QMessageBox msg;
+            msg.critical(nullptr, tr("Error"), e.what());
+        }
+    }
+    else
+    {
+        Log::get_log().delete_logger("file");
+    }
+
+    if (algo_settings_.log_to_console)
+    {
+        Log::get_log().add_logger("console", std::make_unique<ConsoleLogger>());
+    }
+    else
+    {
+        Log::get_log().delete_logger("console");
+    }
+}
+
+
 void MainWindow::display_population()
 {
     if (!packer_)
@@ -190,11 +250,45 @@ void MainWindow::display_population()
                                                       QString("%1").arg(fitness, 0, 'f', 4));
         ui_->table_widget->setItem(i, 0, item);
     }
-    ui_->table_widget->item(max_fitness_index, 0)->setBackgroundColor(QColor(162, 84, 203));
+    ui_->table_widget->item(max_fitness_index, 0)->setBackgroundColor(Qt::yellow);
 }
 
 
 void MainWindow::advance_parent_display()
 {
-
+    if (iter_ != parents_.cbegin()) // убрать раскраску прошлой пары родителей
+    {
+        auto it = iter_ - 1;
+        ui_->table_widget->item(it->at(0), 0)->setBackgroundColor(QColor(Qt::white));
+        if (it->at(1) != static_cast<size_t>(-1))
+        {
+            ui_->table_widget->item(it->at(1), 0)->setBackgroundColor(QColor(Qt::white));
+        }
+        ui_->table_widget->item(it->at(2), 0)->setBackgroundColor(QColor(Qt::white));
+    }
+    if (iter_ == parents_.cend())
+    {
+        return;
+    }
+    ui_->table_widget->item(iter_->at(0), 0)->setBackgroundColor(QColor(Qt::green));
+    if (iter_->at(1) != static_cast<size_t>(-1))
+    {
+        ui_->table_widget->item(iter_->at(1), 0)->setBackgroundColor(QColor(Qt::green));
+        Log::get_log().info(tr("Crossover of individuals ") +
+                            QString::number(iter_->at(0) + 1) + tr(" and ") +
+                            QString::number(iter_->at(1) + 1));
+    }
+    else
+    {
+        Log::get_log().info(tr("Mutation of individual ") + QString::number(iter_->at(0) + 1));
+    }
+    int child_index = iter_->at(2); // добавление новой строки в таблицу
+    double fitness = packer_->get_population().at(child_index).get_fitness();
+    QTableWidgetItem *item = new QTableWidgetItem(tr("Individual ") +
+                                                  QString::number(child_index+1) + ": " +
+                                                  QString("%1").arg(fitness, 0, 'f', 4));
+    item->setBackgroundColor(QColor(Qt::cyan));
+    ui_->table_widget->setRowCount(child_index + 1);
+    ui_->table_widget->setItem(child_index, 0, item);
+    ++iter_;
 }
