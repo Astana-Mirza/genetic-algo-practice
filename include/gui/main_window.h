@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
 
 #include <gui/settings.h>
 #include <gui/enter_data.h>
@@ -58,12 +59,16 @@ private:
     //! @brief Отобразить следующую пару родителей и ребёнка (кроссинговер или мутация).
     void advance_parent_display();
 
+    //! @brief Отобразить особь.
+    void paint_individual(const std::vector<RectangleRepresentation>& rectangles);
+
     Settings algo_settings_;                        //! < настройки приложения.
     Data data_;                                     //! < входные данные алгоритма.
     Result::CrossoverResult parents_;               //! < список родственных связей после кроссинговера или мутации.
     Result::CrossoverResult::const_iterator iter_;  //! < итератор на текущую запись о кроссовере
     std::unique_ptr<Packer> packer_;                //! < объект генетического алгоритма.
     Ui::MainWindow *ui_;                            //! < указатель на раскладку.
+    QGraphicsScene *scene_;                         //! < указатель на сцену.
 };
 
 #endif // #ifndef MAINWINDOW_H

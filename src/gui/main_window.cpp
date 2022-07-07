@@ -25,6 +25,10 @@ MainWindow::MainWindow(QWidget *parent):
     ui_->setupUi(this);
     Log::get_log().add_logger("tab", std::make_unique<TabLogger>(ui_->text_edit_log));
     Log::get_log().debug(tr("Starting program"));
+    scene_ = new QGraphicsScene();
+    ui_->graphics_view->setScene(scene_);
+    ui_->graphics_view->setMinimumHeight(350);
+    ui_->graphics_view->setMinimumWidth(450);
 }
 
 
@@ -126,6 +130,7 @@ void MainWindow::on_action_stop_triggered()
 void MainWindow::on_table_widget_itemSelectionChanged()
 {
     ui_->text_edit_indiv->clear();
+    scene_->clear();
     if (ui_->table_widget->selectedItems().isEmpty() || !packer_)
     {
         return;
@@ -133,6 +138,13 @@ void MainWindow::on_table_widget_itemSelectionChanged()
     QTableWidgetItem *current = ui_->table_widget->selectedItems()[0];
     double fitness = packer_->get_population().at(current->row()).get_fitness();
     const auto& rectangles = packer_->get_population().at(current->row()).representation().get_configuration();
+    if(fitness == 0)
+    {
+        scene_->addText("Individual is unsuitable");
+    } else
+    {
+        paint_individual(rectangles);
+    }
     ui_->text_edit_indiv->insertPlainText(tr("Fitness: %1\n\n").arg(fitness, 0, 'f', 4));
     for (const RectangleRepresentation& rect : rectangles)
     {
@@ -292,3 +304,34 @@ void MainWindow::advance_parent_display()
     ui_->table_widget->setItem(child_index, 0, item);
     ++iter_;
 }
+
+void MainWindow::paint_individual(const std::vector<RectangleRepresentation>& rectangles)
+{
+    double coeff = 300.0 / data_.get_tape_width();
+    double tape_lenght = 0;
+
+    for (const RectangleRepresentation& rect : rectangles)
+    {
+        size_t width = 0;
+        size_t height = 0;
+        size_t x = rect.get_x();
+        size_t y = rect.get_y();
+
+        if(rect.get_rotation())
+        {
+            height = data_.get_rectangles_info()[rect.get_index()].first;
+            width = data_.get_rectangles_info()[rect.get_index()].second;
+        } else
+        {
+            width = data_.get_rectangles_info()[rect.get_index()].first;
+            height = data_.get_rectangles_info()[rect.get_index()].second;
+        }
+
+        scene_->addRect(x * coeff, y * coeff, width * coeff, height * coeff, QPen(), QBrush(data_.get_color(rect.get_index())));
+
+        if(tape_lenght < y + height)
+            tape_lenght = y + height;
+    }
+    scene_->addRect(0, 0, 300, tape_lenght * coeff);
+}
+
