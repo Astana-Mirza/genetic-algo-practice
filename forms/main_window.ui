@@ -132,6 +132,7 @@
    <addaction name="separator"/>
    <addaction name="action_settings"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="action_enter_data">
    <property name="text">
     <string>Enter Data</string>
