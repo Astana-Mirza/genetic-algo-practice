@@ -95,13 +95,16 @@ void MainWindow::on_action_step_triggered()
             display_population();
             break;
         default:
+            ui_->statusBar->showMessage("Algorithm finished");
             return;
     }
+    ui_->statusBar->showMessage("Iteration: " + QString::number(packer_->get_iteration_count()));
 }
 
 
 void MainWindow::on_action_run_triggered()
 {
+    ui_->statusBar->showMessage("");
     if (!packer_ || !data_.get_rectangles_info().size())
     {
         QMessageBox msg;
@@ -113,12 +116,14 @@ void MainWindow::on_action_run_triggered()
     for (Result res = packer_->step(); res.state != Result::State::End; res = packer_->step())
         ;
     display_population();
+    ui_->statusBar->showMessage("Algorithm finished");
 }
 
 
 void MainWindow::on_action_stop_triggered()
 {
     Log::get_log().debug(tr("Algorithm stopped"));
+    ui_->statusBar->showMessage("");
     ui_->table_widget->setRowCount(0);
     ui_->action_enter_data->setDisabled(false);
     ui_->action_settings->setDisabled(false);
