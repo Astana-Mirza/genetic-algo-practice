@@ -68,6 +68,8 @@ void MainWindow::on_action_step_triggered()
 {
     if (!packer_ || !data_.get_rectangles_info().size())
     {
+        QMessageBox msg;
+        msg.information(nullptr, tr("Info"), tr("Enter valid data to ") + tr("start"));
         return;
     }
     ui_->action_enter_data->setDisabled(true);
@@ -102,6 +104,8 @@ void MainWindow::on_action_run_triggered()
 {
     if (!packer_ || !data_.get_rectangles_info().size())
     {
+        QMessageBox msg;
+        msg.information(nullptr, tr("Info"), tr("Enter valid data to ") + tr("run"));
         return;
     }
     ui_->action_enter_data->setDisabled(true);
@@ -217,6 +221,7 @@ void MainWindow::apply_log_settings()
             algo_settings_.log_to_file = false;
             QMessageBox msg;
             msg.critical(nullptr, tr("Error"), e.what());
+            Log::get_log().critical(e.what());
         }
     }
     else

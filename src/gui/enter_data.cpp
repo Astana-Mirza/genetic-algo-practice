@@ -7,6 +7,8 @@
 #include <QSpinBox>
 #include <QMessageBox>
 
+#include <logger/log.h>
+
 EnterData::EnterData(QWidget *parent, const Data& data) :
     QDialog(parent), data_(data), ui(new Ui::EnterData)
 {
@@ -94,6 +96,7 @@ void EnterData::on_open_file_button_clicked()
         data_.set_file_name("");
         QMessageBox msg;
         msg.critical(nullptr, tr("Error"), e.what());
+        Log::get_log().critical(e.what());
     }
 }
 
