@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17 lrelease embed_translations
+CONFIG += c++17
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -104,6 +104,14 @@ FORMS += \
 
 TRANSLATIONS += \
     $${TR_DIR}/genetic_algorithm_ru_RU.ts
+
+POST_TARGETDEPS += $${DESTDIR}/genetic_algorithm_ru_RU.qm
+
+translation_target.target = $${DESTDIR}/genetic_algorithm_ru_RU.qm
+translation_target.depends = $${TRANSLATIONS}
+translation_target.commands = lrelease -qm $${DESTDIR}/genetic_algorithm_ru_RU.qm $${TRANSLATIONS}
+QMAKE_EXTRA_TARGETS += translation_target
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
