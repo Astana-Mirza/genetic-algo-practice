@@ -5,7 +5,7 @@
     <name>EnterData</name>
     <message>
         <source>Enter data</source>
-	<translation>Ввести данные</translation>
+        <translation>Ввести данные</translation>
     </message>
     <message>
         <source>Select file</source>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>Enter valid data to </source>
-	<translation>Введите подходящие данные, чтобы выполнить </translation>
+        <translation>Введите подходящие данные, чтобы выполнить </translation>
     </message>
     <message>
         <source>start</source>
@@ -153,6 +153,18 @@
     <message>
         <source>Individual </source>
         <translation>Особь </translation>
+    </message>
+    <message>
+        <source>Algorithm finished</source>
+        <translation>Алгоритм закончил выполнение</translation>
+    </message>
+    <message>
+        <source>Iteration: </source>
+        <translation>Итерация: </translation>
+    </message>
+    <message>
+        <source>Individual is unsuitable</source>
+        <translation>Особь непригодна</translation>
     </message>
 </context>
 <context>
@@ -298,7 +310,7 @@
     </message>
     <message>
         <source>Step count</source>
-	<translation>Количество шагов</translation>
+        <translation>Количество шагов</translation>
     </message>
     <message>
         <source>Fitness</source>

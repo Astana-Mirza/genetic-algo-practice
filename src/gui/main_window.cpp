@@ -95,10 +95,10 @@ void MainWindow::on_action_step_triggered()
             display_population();
             break;
         default:
-            ui_->statusBar->showMessage("Algorithm finished");
+            ui_->statusBar->showMessage(tr("Algorithm finished"));
             return;
     }
-    ui_->statusBar->showMessage("Iteration: " + QString::number(packer_->get_iteration_count()));
+    ui_->statusBar->showMessage(tr("Iteration: ") + QString::number(packer_->get_iteration_count()));
 }
 
 
@@ -116,7 +116,7 @@ void MainWindow::on_action_run_triggered()
     for (Result res = packer_->step(); res.state != Result::State::End; res = packer_->step())
         ;
     display_population();
-    ui_->statusBar->showMessage("Algorithm finished");
+    ui_->statusBar->showMessage(tr("Algorithm finished"));
 }
 
 
@@ -147,7 +147,7 @@ void MainWindow::on_table_widget_itemSelectionChanged()
     const auto& rectangles = packer_->get_population().at(current->row()).representation().get_configuration();
     if(fitness == 0)
     {
-        scene_->addText("Individual is unsuitable");
+        scene_->addText(tr("Individual is unsuitable"));
     } else
     {
         paint_individual(rectangles);
