@@ -21,7 +21,7 @@ MOC_DIR      = $${PWD}/obj
 UI_DIR       = $${PWD}/obj
 RCC_DIR      = $${PWD}/obj
 
-TR_DIR       = translations
+TR_DIR       = $${PWD}/translations
 INCLUDE_DIR  = include
 SOURCE_DIR   = src
 FORM_DIR     = forms
