@@ -15,36 +15,36 @@
 class TruncationSelector: public ISelector
 {
 public:
-	/**
-	 * @brief Конструктор оператора отбора особей методом отсечения
-	 * 
-	 * @param unsuitables_part Доля непригодных особей
-	 */
-	TruncationSelector(float unsuitables_part = 0.25);
+    /**
+     * @brief Конструктор оператора отбора особей методом отсечения
+     * 
+     * @param unsuitables_part Доля непригодных особей
+     */
+    TruncationSelector(float unsuitables_part = 0.25);
 
-	/**
-	 * @brief Отбор особей в новое поколение методом отсечения
-	 * @details Метод выбирает заданное количество особей в новое поколение
-	 * 
-	 * @param population Популяция, из которой будет происходить выбор особей
-	 * @param population_size Желаемый размер популяции
-	 * 
-	 * @return Новое поколение
-	 */
-	std::vector<Individual> exec(
-		const std::vector<Individual>& population, 
-		int population_size
-	);
+    /**
+     * @brief Отбор особей в новое поколение методом отсечения
+     * @details Метод выбирает заданное количество особей в новое поколение
+     * 
+     * @param population Популяция, из которой будет происходить выбор особей
+     * @param population_size Желаемый размер популяции
+     * 
+     * @return Новое поколение
+     */
+    std::vector<Individual> exec(
+        const std::vector<Individual>& population, 
+        size_t population_size
+    );
 protected:
-	/**
-	 * Доля непригодных особей
-	 */
-	float unsuitables_part_;
-	/**
-	 * Генератор случайных чисел
-	 */
-	std::random_device rd_;
-	std::default_random_engine random_generator_;
+    /**
+     * Доля непригодных особей
+     */
+    float unsuitables_part_;
+    /**
+     * Генератор случайных чисел
+     */
+    std::random_device rd_;
+    std::default_random_engine random_generator_;
 };
 
 #endif

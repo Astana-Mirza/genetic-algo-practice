@@ -7,6 +7,8 @@
 //! @brief Результат одного шага генетического алгоритма.
 struct Result
 {
+    using CrossoverResult = std::vector<std::array<size_t, 3>>;
+
     //! @brief состояние алгоритма, пройденное на этом шаге.
     enum class State
     {
@@ -17,7 +19,7 @@ struct Result
         End                    //! < конец работы алгоритма.
     };
     State state;                                            //! < пройденное состояние алгоритма.
-    std::vector<std::array<size_t, 3>> changed_individuals; //! < список добавленных особей в виде
+    CrossoverResult changed_individuals;                    //! < список добавленных особей в виде
                                                             //! троек индексов (родитель1, родитель2, особь)
 };
 

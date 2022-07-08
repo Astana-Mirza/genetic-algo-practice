@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17 lrelease embed_translations
+CONFIG += c++17
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -21,7 +21,7 @@ MOC_DIR      = $${PWD}/obj
 UI_DIR       = $${PWD}/obj
 RCC_DIR      = $${PWD}/obj
 
-TR_DIR       = translations
+TR_DIR       = $${PWD}/translations
 INCLUDE_DIR  = include
 SOURCE_DIR   = src
 FORM_DIR     = forms
@@ -30,6 +30,7 @@ ABSTRACT_DIR = abstract
 GUI_DIR      = gui
 LOGGER_DIR   = logger
 GENETIC_DIR  = genetic
+COMMON_DIR   = common
 
 INCLUDEPATH += $${INCLUDE_DIR}
 
@@ -55,7 +56,9 @@ SOURCES += \
     $${SOURCE_DIR}/$${GENETIC_DIR}/elite_selector.cpp \
     $${SOURCE_DIR}/$${GENETIC_DIR}/iter_stop_condition.cpp \
     $${SOURCE_DIR}/$${GENETIC_DIR}/fitness_stop_condition.cpp \
-    $${SOURCE_DIR}/$${GENETIC_DIR}/distance_stop_condition.cpp
+    $${SOURCE_DIR}/$${GENETIC_DIR}/distance_stop_condition.cpp \
+    $${SOURCE_DIR}/$${COMMON_DIR}/rectangle_representation.cpp \
+    $${SOURCE_DIR}/$${COMMON_DIR}/individual_representation.cpp
 
 HEADERS += \
     $${INCLUDE_DIR}/$${ABSTRACT_DIR}/ilogger.h \
@@ -89,7 +92,9 @@ HEADERS += \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/result.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/iter_stop_condition.h \
     $${INCLUDE_DIR}/$${GENETIC_DIR}/fitness_stop_condition.h \
-    $${INCLUDE_DIR}/$${GENETIC_DIR}/distance_stop_condition.h
+    $${INCLUDE_DIR}/$${GENETIC_DIR}/distance_stop_condition.h \
+    $${INCLUDE_DIR}/$${COMMON_DIR}/rectangle_representation.h \
+    $${INCLUDE_DIR}/$${COMMON_DIR}/individual_representation.h
 
 
 FORMS += \
@@ -99,6 +104,14 @@ FORMS += \
 
 TRANSLATIONS += \
     $${TR_DIR}/genetic_algorithm_ru_RU.ts
+
+POST_TARGETDEPS += $${DESTDIR}/genetic_algorithm_ru_RU.qm
+
+translation_target.target = $${DESTDIR}/genetic_algorithm_ru_RU.qm
+translation_target.depends = $${TRANSLATIONS}
+translation_target.commands = lrelease -qm $${DESTDIR}/genetic_algorithm_ru_RU.qm $${TRANSLATIONS}
+QMAKE_EXTRA_TARGETS += translation_target
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

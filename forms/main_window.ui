@@ -21,6 +21,18 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <widget class="QTableWidget" name="table_widget">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerItem</enum>
+       </property>
        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
         <bool>false</bool>
        </attribute>
@@ -115,11 +127,12 @@
    </attribute>
    <addaction name="action_enter_data"/>
    <addaction name="action_step"/>
-   <addaction name="action_continue"/>
+   <addaction name="action_run"/>
    <addaction name="action_stop"/>
    <addaction name="separator"/>
    <addaction name="action_settings"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="action_enter_data">
    <property name="text">
     <string>Enter Data</string>
@@ -130,9 +143,12 @@
     <string>Step</string>
    </property>
   </action>
-  <action name="action_continue">
+  <action name="action_run">
    <property name="text">
-    <string>Continue</string>
+    <string>Run</string>
+   </property>
+   <property name="toolTip">
+    <string>Run</string>
    </property>
   </action>
   <action name="action_stop">

@@ -1,25 +1,25 @@
 #include "genetic/gene.h"
 
-Gene::Gene(int coordinate, int index, bool rotate):
-	coordinate_{coordinate},
-	index_{index},
-	rotate_{rotate}
+Gene::Gene(size_t coordinate, size_t index, bool rotate):
+    coordinate_{coordinate},
+    index_{index},
+    rotate_{rotate}
 {}
 
 
-int Gene::get_coordinate() const
+size_t Gene::get_coordinate() const
 {
-	return coordinate_;
+    return coordinate_;
 }
 
 
-int Gene::get_index() const
+size_t Gene::get_index() const
 {
-	return index_;
+    return index_;
 }
 
 
 bool Gene::get_rotation() const
 {
-	return rotate_;
+    return rotate_;
 }

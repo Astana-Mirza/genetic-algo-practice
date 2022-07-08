@@ -7,5 +7,5 @@ IterStopCondition::IterStopCondition(size_t iter_count):
 
 bool IterStopCondition::is_stop(const Packer &packer) const
 {
-    return packer.get_iteration_count() < iter_count_;
+    return packer.get_iteration_count() >= iter_count_;
 }

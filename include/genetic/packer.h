@@ -20,22 +20,22 @@
 class Packer
 {
 public:
-	/**
-	 * @brief Конструктор класса генетического алгоритма
-	 * @details На основе переданных условий задачи (конфигурации прямоугольников и ширина ленты)
-	 * инициализируется генетический алгоритм для рещения задачи. Также могут быть заданы параметры алгоритма
-	 * 
-	 * @param rectangles Конфигурации прямоугольников, которые необходимо разместить на ленте
-	 * @param tape_width Ширина замощаемой ленты
-	 * @param parent_selection_operator Оператор выбора родителя
-	 * @param selection_operator Оператор отбора особей
-	 * @param population_size Размер популяции в генетическом алгоритме
-	 * @param crossover1_probability Вероятность использования первого оператора кроссовера
-	 * @param crossover2_probability Вероятность использования второго оператора кроссовера
-	 * @param mutation_probability Вероятность использования оператора мутации
-	 */
-	Packer(
-		const std::vector<std::pair<int, int>>& rectangles,
+    /**
+     * @brief Конструктор класса генетического алгоритма
+     * @details На основе переданных условий задачи (конфигурации прямоугольников и ширина ленты)
+     * инициализируется генетический алгоритм для рещения задачи. Также могут быть заданы параметры алгоритма
+     * 
+     * @param rectangles Конфигурации прямоугольников, которые необходимо разместить на ленте
+     * @param tape_width Ширина замощаемой ленты
+     * @param parent_selection_operator Оператор выбора родителя
+     * @param selection_operator Оператор отбора особей
+     * @param population_size Размер популяции в генетическом алгоритме
+     * @param crossover1_probability Вероятность использования первого оператора кроссовера
+     * @param crossover2_probability Вероятность использования второго оператора кроссовера
+     * @param mutation_probability Вероятность использования оператора мутации
+     */
+    Packer(
+        const std::vector<std::pair<size_t, size_t>>& rectangles,
         size_t tape_width,
         std::unique_ptr<IParentSelector>&& parent_selection_operator,
         std::unique_ptr<ISelector>&& selection_operator,
@@ -64,7 +64,7 @@ protected:
     //! @brief Выбор особей в новую популяцию
     Result selection();
 
-    std::vector<std::pair<int, int>> rectangles_;   //! < прямоугольники для замощения ленты
+    std::vector<std::pair<size_t, size_t>> rectangles_;   //! < прямоугольники для замощения ленты
     std::vector<Individual> population_;            //! < текущая популяция
     size_t iteration_count_;                        //! < количество итераций алгоритма
     size_t tape_width_;                             //! < ширина ленты

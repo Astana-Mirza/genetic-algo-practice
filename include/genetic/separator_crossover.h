@@ -17,16 +17,16 @@
 class SeparatorCrossover: public ICrossover
 {
 public:
-	/**
-	 * @brief Генерация генов нового потомка
-	 * @details Метод генерирует гены нового потомка на основе генов его родителей
-	 * 
-	 * @param parent1 Первый родитель потомка
-	 * @param parent2 Второй родитель потомка
-	 * 
-	 * @return Гены потомка
-	 */
-	std::vector<Gene> exec(const Individual& parent1, const Individual& parent2);
+    /**
+     * @brief Генерация генов нового потомка
+     * @details Метод генерирует гены нового потомка на основе генов его родителей
+     * 
+     * @param parent1 Первый родитель потомка
+     * @param parent2 Второй родитель потомка
+     * 
+     * @return Гены потомка
+     */
+    std::vector<Gene> exec(const Individual& parent1, const Individual& parent2);
 };
 
 #endif
