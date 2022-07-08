@@ -20,24 +20,24 @@ void Data::read_from_file()
     {
         throw std::runtime_error{QObject::tr("No tape width in file").toStdString()};
     }
-    size_t new_tape_width = 0;
+    int new_tape_width = 0;
     pair_vector new_info;
     stream >> new_tape_width;
-    if (new_tape_width == 0)
+    if (new_tape_width <= 0)
     {
-        throw std::runtime_error{QObject::tr("Tape width cannot be zero").toStdString()};
+        throw std::runtime_error{QObject::tr("Tape width must be more than zero").toStdString()};
     }
     while (!stream.atEnd())
     {
-        size_t width = 0, height = 0;
+        int width = 0, height = 0;
         stream >> width >> height;
         if (stream.status() != QTextStream::Ok)
         {
-            throw std::runtime_error{QObject::tr("Invalid file").toStdString()};
+            throw std::runtime_error{QObject::tr("Invalid file format").toStdString()};
         }
-        if (width == 0 || height == 0)
+        if (width <= 0 || height <= 0)
         {
-            throw std::runtime_error{QObject::tr("Read rectangle with zero square").toStdString()};
+            throw std::runtime_error{QObject::tr("Rectangle sizes must be more than zero").toStdString()};
         }
         stream.skipWhiteSpace();
         new_info.push_back({width, height});
